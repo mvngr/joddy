@@ -30,14 +30,18 @@ SOURCES += \
     joddygraphicview.cpp \
     osmparser.cpp \
     joddycontroller.cpp \
-    nodestorage.cpp
+    nodestorage.cpp \
+    object.cpp \
+    building.cpp
 
 HEADERS += \
         mainwindow.h \
     joddygraphicview.h \
     osmparser.h \
     joddycontroller.h \
-    nodestorage.h
+    nodestorage.h \
+    object.h \
+    building.h
 
 FORMS += \
         mainwindow.ui

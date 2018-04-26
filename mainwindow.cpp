@@ -15,6 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->statusBar->addWidget(progress_);
     ui->graphicLayout->addWidget(map_);
+
+    Building b = * new Building();
+
 }
 
 MainWindow::~MainWindow()

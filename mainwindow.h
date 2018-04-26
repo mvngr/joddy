@@ -9,6 +9,7 @@
 #include <joddygraphicview.h>
 #include <joddycontroller.h>
 #include <osmparser.h>
+#include <building.h>
 
 namespace Ui {
 class MainWindow;

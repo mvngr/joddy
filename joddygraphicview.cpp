@@ -37,6 +37,8 @@ void JoddyGraphicView::slotAlarmTimer()
 
     scene->setSceneRect(0,0,width,height);
 
+
+    /*
     QPen penBlack(Qt::black);
     QPen penRed(Qt::red);
 
@@ -57,24 +59,19 @@ void JoddyGraphicView::slotAlarmTimer()
                                        centerOfWidget_X - (sideOfSquare/2), centerOfWidget_Y + (sideOfSquare/2), penRed));
     group_2->addToGroup(scene->addLine(centerOfWidget_X - (sideOfSquare/2), centerOfWidget_Y + (sideOfSquare/2),
                                        centerOfWidget_X - (sideOfSquare/2), centerOfWidget_Y - (sideOfSquare/2), penRed));
+                                       */
+    return;
 }
 void JoddyGraphicView::resizeEvent(QResizeEvent *event)
 {
     timer->start(50);
     QGraphicsView::resizeEvent(event);
+    return;
 }
-
-
-/* Метод для удаления всех элементов из группы
- * */
 void JoddyGraphicView::deleteItemsFromGroup(QGraphicsItemGroup *group)
 {
-    /* Перебираем все элементы сцены, и если они принадлежат группе,
-     * переданной в метод, то удаляем их
-     * */
-    foreach( QGraphicsItem *item, scene->items(group->boundingRect())) {
-       if(item->group() == group ) {
+    foreach( QGraphicsItem *item, scene->items(group->boundingRect()))
+       if(item->group() == group )
           delete item;
-       }
-    }
+    return;
 }

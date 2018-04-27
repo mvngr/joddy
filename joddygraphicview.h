@@ -6,6 +6,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
 #include <QTimer>
+#include <joddycontroller.h>
 
 class JoddyGraphicView : public QGraphicsView
 {
@@ -24,6 +25,8 @@ private:
     QGraphicsItemGroup *group_1;
     QGraphicsItemGroup *group_2;
     QTimer *timer;
+
+    JoddyController *jc_;
 
 private:
     void resizeEvent(QResizeEvent *event);

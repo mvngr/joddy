@@ -16,12 +16,11 @@ JoddyGraphicView::JoddyGraphicView(QWidget *parent) : QGraphicsView(parent)
     group_1 = new QGraphicsItemGroup();
     group_2 = new QGraphicsItemGroup();
 
+    points_ = new QGraphicsItemGroup();
+
     scene->addItem(group_1);
     scene->addItem(group_2);
-
-    timer = new QTimer();
-    connect(timer, SIGNAL(timeout()), this, SLOT(slotAlarmTimer()));
-    timer->start(50);
+    scene->addItem(points_);
 }
 JoddyGraphicView::~JoddyGraphicView()
 {
@@ -31,11 +30,19 @@ void JoddyGraphicView::slotAlarmTimer()
 {
     this->deleteItemsFromGroup(group_1);
     this->deleteItemsFromGroup(group_2);
+    this->deleteItemsFromGroup(points_);
 
     int width = this->width();
     int height = this->height();
 
     scene->setSceneRect(0,0,width,height);
+
+    QPen penBlack(Qt::black);
+    QList<QPointF> temp;
+    for(int i = 0; i < temp.size(); i++) {
+        points_->addToGroup(scene->addEllipse(temp[i].rx(), temp[i].ry(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
+        qDebug() << "Object added";
+    }
 
 
     /*
@@ -64,7 +71,6 @@ void JoddyGraphicView::slotAlarmTimer()
 }
 void JoddyGraphicView::resizeEvent(QResizeEvent *event)
 {
-    timer->start(50);
     QGraphicsView::resizeEvent(event);
     return;
 }

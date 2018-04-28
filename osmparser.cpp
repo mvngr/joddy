@@ -33,4 +33,6 @@ bool OsmParser::readFile(){
             //qDebug() << xml.name();
         }
     }
+    controller_->getNodeStorage()->resizePlace();
+    return true;
 }

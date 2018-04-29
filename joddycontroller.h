@@ -2,18 +2,20 @@
 #define JODDYCONTROLLER_H
 #include <nodestorage.h>
 #include <joddygraphicview.h>
-#include <QTime>
+#include <building.h>
 
 class JoddyController
 {
 public:
     JoddyController();
     NodeStorage *getNodeStorage();
+    void setMap(JoddyGraphicView *map);
+    void setBuilding(Building *b);
 private:
     NodeStorage *nodeStorage_;
     JoddyGraphicView *map_;
-    void connectTimer();
-    QTimer *mapUpdate_;
+    QList<Building *> * buildings_;
+
 };
 
 #endif // JODDYCONTROLLER_H

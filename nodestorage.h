@@ -13,7 +13,8 @@ public:
     NodeStorage();
     void setBounds(double minlat, double minlon, double maxlat, double maxlon);
     void addNode(QString id, double lat, double lon);
-    QList<QPointF> getNodes();
+    QList<QPointF> *getNodes();
+    QPointF getPoint(QString number);
     void resizePlace();
 
 private:

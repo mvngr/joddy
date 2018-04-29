@@ -16,6 +16,8 @@ bool OsmParser::readFile(){
     }
     QXmlStreamReader xml(file_);
 
+    QList<QString> temp_str_points_id = * new QList<QString>;
+
     while (!xml.atEnd() && !xml.hasError())
     {
         QXmlStreamReader::TokenType token = xml.readNext();
@@ -30,7 +32,18 @@ bool OsmParser::readFile(){
             if(xml.name() == "node" && xml.attributes().hasAttribute("id") && xml.attributes().hasAttribute("lat") && xml.attributes().hasAttribute("lon"))
                 controller_->getNodeStorage()->addNode(xml.attributes().value("id").toString(), xml.attributes().value("lat").toDouble(), xml.attributes().value("lon").toDouble());
 
-            //qDebug() << xml.name();
+            if(xml.name() == "node" && xml.attributes().hasAttribute("id")){
+                temp_str_points_id.push_back(xml.attributes().value("id").toString());
+            }
+
+            if(xml.name() == "tag" && xml.attributes().hasAttribute("k") && xml.attributes().value("k") == "building"){
+                QList<QPointF> temp_points = * new QList<QPointF>;
+                foreach (auto id, temp_str_points_id)
+                    temp_points.push_back(controller_->getNodeStorage()->getPoint(id));
+                controller_->setBuilding(new Building(temp_points));
+                temp_str_points_id.clear();
+            }
+            qDebug() << xml.name();
         }
     }
     controller_->getNodeStorage()->resizePlace();

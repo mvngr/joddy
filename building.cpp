@@ -3,6 +3,9 @@
 Building::Building():Object(){}
 Building::Building(QList<QPointF> points):Object(points){}
 Building::Building(QList<QPointF> points, QColor stroke, QColor fill):Object(points, stroke, fill){}
+QList<QPointF> Building::getPoints(){
+    return Object::getPoints();
+};
 QString Building::getStreetName(){
     return street_;
 }
@@ -46,4 +49,20 @@ void Building::setMaterial(QString material){
 }
 QString Building::getMaterial(){
     return Object::getMaterial();
+}
+Building& Building::operator=(Building& other){
+  street_ = other.street_;
+  number_ = other.number_;
+  levels_ = other.levels_;
+  material_ = other.material_;
+  type_ = other.type_;
+
+  return *this;
+}
+QPolygonF Building::getPolygon(){
+    return poly_;
+}
+void Building::setPolygon(QPolygonF poly){
+    poly_ = poly;
+    return;
 }

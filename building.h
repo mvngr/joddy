@@ -3,6 +3,7 @@
 
 #include <object.h>
 #include <QDebug>
+#include <QPolygonF>
 
 class Building : Object
 {
@@ -16,6 +17,8 @@ public:
     int getLevels();
     QString getType();
     QString getMaterial();
+    QList<QPointF> getPoints();
+    QPolygonF getPolygon();
 
     void setStreetName(QString name);
     void setNumber(QString number);
@@ -24,12 +27,16 @@ public:
     void setType(int type);
     void setMaterial(int index);
     void setMaterial(QString material);
+    void setPolygon(QPolygonF list);
+
+    Building & operator =(Building &other);
 
 private:
     QString street_;
     QString number_;
     int levels_;
     Materials material_;
+    QPolygonF poly_;
     //public => public_building
     enum Types{yes, apartments, farm, hotel, house, detached, residential, dormitory, terrace, houseboat, bungalow, static_caravan, commercial,
                industrial, retail, warehouse, kiosk, cabin, religious, cathedral, chapel, church, mosque, temple, synagogue, shrine, bakehouse,

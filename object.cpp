@@ -11,6 +11,9 @@ Object::Object(QList<QPointF> points){
     setStrokeColor(Qt::black);
     setFillColor(QColor(0,0,0,32));
 }
+Object::Object(QList<QString> points){
+
+}
 Object::Object(QList<QPointF> points, QColor stroke, QColor fill){
     setPoints(points);
     setStrokeColor(stroke);

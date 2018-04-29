@@ -11,6 +11,7 @@ class Object
 protected:
     Object();
     Object(QList<QPointF> points);
+    Object(QList<QString> points);
     Object(QList<QPointF> points, QColor stroke, QColor fill);
 
     QList<QPointF> getPoints();

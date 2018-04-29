@@ -16,11 +16,17 @@ JoddyGraphicView::JoddyGraphicView(QWidget *parent) : QGraphicsView(parent)
     group_1 = new QGraphicsItemGroup();
     group_2 = new QGraphicsItemGroup();
 
-    points_ = new QGraphicsItemGroup();
+    gPoints_ = new QGraphicsItemGroup();
 
     scene->addItem(group_1);
     scene->addItem(group_2);
-    scene->addItem(points_);
+    scene->addItem(gPoints_);
+
+    temp = false;
+
+    mapUpdate_ = new QTimer();
+    connect(mapUpdate_, SIGNAL(timeout()), this, SLOT(slotAlarmTimer()));
+    mapUpdate_->start(50);
 }
 JoddyGraphicView::~JoddyGraphicView()
 {
@@ -30,7 +36,7 @@ void JoddyGraphicView::slotAlarmTimer()
 {
     this->deleteItemsFromGroup(group_1);
     this->deleteItemsFromGroup(group_2);
-    this->deleteItemsFromGroup(points_);
+    //this->deleteItemsFromGroup(gPoints_);
 
     int width = this->width();
     int height = this->height();
@@ -38,10 +44,17 @@ void JoddyGraphicView::slotAlarmTimer()
     scene->setSceneRect(0,0,width,height);
 
     QPen penBlack(Qt::black);
-    QList<QPointF> temp;
-    for(int i = 0; i < temp.size(); i++) {
-        points_->addToGroup(scene->addEllipse(temp[i].rx(), temp[i].ry(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
-        qDebug() << "Object added";
+    QPen penBuild(Qt::darkCyan);
+
+    if(!temp && points_->size() != 0){
+        for(int i = 0; i < points_->size(); i++) {
+            QPointF f = points_->at(i);
+            gPoints_->addToGroup(scene->addEllipse(f.ry(), 800 - f.rx(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
+        }
+        for(int i = 0; i < buildings_->size(); i++){
+            gPoints_->addToGroup(scene->addPolygon(buildings_->at(i)->getPolygon(), penBuild, QBrush(Qt::SolidPattern)));
+        }
+        temp = true;
     }
 
 
@@ -77,7 +90,15 @@ void JoddyGraphicView::resizeEvent(QResizeEvent *event)
 void JoddyGraphicView::deleteItemsFromGroup(QGraphicsItemGroup *group)
 {
     foreach( QGraphicsItem *item, scene->items(group->boundingRect()))
-       if(item->group() == group )
-          delete item;
+        if(item->group() == group )
+            delete item;
+    return;
+}
+void JoddyGraphicView::setPoints(QList<QPointF> *list){
+    points_ = list;
+    return;
+}
+void JoddyGraphicView::setBuildings(QList<Building * > * list){
+    buildings_ = list;
     return;
 }

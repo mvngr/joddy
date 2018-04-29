@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     controller_ = new JoddyController();
     map_ = new JoddyGraphicView();
+    controller_->setMap(map_);
     progress_ = new QLabel(this);
 
     progress_->setText("Status: done");

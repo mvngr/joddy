@@ -30,10 +30,13 @@ bool OsmParser::readFile(){
                                                          xml.attributes().value("maxlat").toDouble(), xml.attributes().value("maxlon").toDouble());
 
             if(xml.name() == "node" && xml.attributes().hasAttribute("id") && xml.attributes().hasAttribute("lat") && xml.attributes().hasAttribute("lon"))
-                controller_->getNodeStorage()->addNode(xml.attributes().value("id").toString(), xml.attributes().value("lat").toDouble(), xml.attributes().value("lon").toDouble());
+                controller_->getNodeStorage()->addNode(xml.attributes().value("id").toString(), xml.attributes().value("lon").toDouble(), xml.attributes().value("lat").toDouble());
 
-            if(xml.name() == "node" && xml.attributes().hasAttribute("id")){
-                temp_str_points_id.push_back(xml.attributes().value("id").toString());
+            if(xml.name() == "way")
+                temp_str_points_id.clear();
+
+            if(xml.name() == "nd" && xml.attributes().hasAttribute("ref")){
+                temp_str_points_id.push_back(xml.attributes().value("ref").toString());
             }
 
             if(xml.name() == "tag" && xml.attributes().hasAttribute("k") && xml.attributes().value("k") == "building"){

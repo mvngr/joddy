@@ -6,6 +6,7 @@ JoddyGraphicView::JoddyGraphicView(QWidget *parent) : QGraphicsView(parent)
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setAlignment(Qt::AlignCenter);
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    this->setRenderHint(QPainter::Antialiasing);
 
     this->setMinimumHeight(100);
     this->setMinimumWidth(100);
@@ -44,16 +45,21 @@ void JoddyGraphicView::slotAlarmTimer()
     scene->setSceneRect(0,0,width,height);
 
     QPen penBlack(Qt::black);
-    QPen penBuild(Qt::darkCyan);
+    QPen penBuild(Qt::black);
 
     if(!temp && points_->size() != 0){
+        for(int i = 0; i < buildings_->size(); i++){
+            auto p = buildings_->at(i)->getPolygon();
+            gPoints_->addToGroup(scene->addPolygon(p, penBuild, QBrush(QColor(205,245,248))));
+            qDebug() << "poly loaded";
+        }
         for(int i = 0; i < points_->size(); i++) {
             QPointF f = points_->at(i);
-            gPoints_->addToGroup(scene->addEllipse(f.ry(), 800 - f.rx(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
+            gPoints_->addToGroup(scene->addEllipse(f.rx(), f.ry(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
+            qDebug() << "point loaded";
         }
-        for(int i = 0; i < buildings_->size(); i++){
-            gPoints_->addToGroup(scene->addPolygon(buildings_->at(i)->getPolygon(), penBuild, QBrush(Qt::SolidPattern)));
-        }
+
+
         temp = true;
     }
 

@@ -25,14 +25,16 @@ void NodeStorage::resizePlace(){
     if(isResized_)
         return;
     double maximum = (corrLat_ > corrLon_ ? corrLat_ : corrLon_);
-    double coefficient = (double)PLACE_SIZE / maximum;
+    double coefficient = (double)1000 / maximum;
 
     for(int i = 0; i < nodes_.length(); i++)
-        nodes_[i] = QPointF((nodes_[i].rx() - minLat_) * coefficient, (nodes_[i].ry() - minLon_) * coefficient);
+        nodes_[i] = QPointF((nodes_[i].rx() - minLon_) * coefficient, (nodes_[i].ry() - minLat_) * coefficient);
 
     isResized_ = true;
     return;
 }
 QPointF NodeStorage::getPoint(QString number){
+    if(!isResized_)
+        resizePlace();
     return association_.contains(number) ? nodes_[association_[number]] : QPointF(0,0);
-}
+    }

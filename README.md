@@ -4,4 +4,4 @@
 На данный момент приложение находится в стадии разработки. Степень ее готовности можно увидеть на скриншоте ниже (левая сторона)
 
 ![Скриншот #2](https://i.imgur.com/m8GHWk3.png)
-[Скриншот #1](https://i.imgur.com/UNqMjcY.png?1)
+[![Скриншот #1](https://i.imgur.com/UNqMjcYm.png?1)](https://i.imgur.com/UNqMjcY.png?1)

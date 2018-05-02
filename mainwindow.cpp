@@ -31,7 +31,10 @@ void MainWindow::on_openFile_triggered()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("OpenStreetMap Files (*.osm)"));
 
     if (fileName != "") {
+        QTime t;
+        t.start();
         parser_ = new OsmParser(fileName, controller_);
         parser_->readFile();
+        qDebug("Time elapsed: %d ms", t.elapsed());
     }
 }

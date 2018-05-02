@@ -5,19 +5,19 @@ Object::Object()
     setPoints(* new QList<QPointF>);
     setStrokeColor(Qt::red);
     setFillColor(QColor(255,0,0,128));
+    material_ = Materials::wood;
 }
-Object::Object(QList<QPointF> points){
+Object::Object(QList<QPointF> points, Materials material){
     setPoints(points);
     setStrokeColor(Qt::black);
     setFillColor(QColor(0,0,0,32));
+    material_ = material;
 }
-Object::Object(QList<QString> points){
-
-}
-Object::Object(QList<QPointF> points, QColor stroke, QColor fill){
+Object::Object(QList<QPointF> points, QColor stroke, QColor fill, Materials material){
     setPoints(points);
     setStrokeColor(stroke);
     setFillColor(fill);
+    material_ = material;
 }
 void Object::setPoints(QList<QPointF> points){
     points_ = points;
@@ -46,11 +46,12 @@ QColor Object::getStrokeColor(){
 QColor Object::getFillColor(){
     return fill_;
 }
-QString Object::getMaterial(){
-    return materials_to_numbers_[material_];
-}
 QPointF Object::getPoint(int index){
     return index >= 0 && index < points_.size() ? points_[index] : QPointF();
+}
+/*
+QString Object::getMaterial(){
+    return materials_to_numbers_[material_];
 }
 void Object::setMaterial(QString material){
     int number_type = materials_to_numbers_.indexOf(material);
@@ -61,3 +62,4 @@ void Object::setMaterial(int index){
     material_ = static_cast<Materials>(index >= 0 && index < materials_to_numbers_.size() ? index : 0);
     return;
 }
+*/

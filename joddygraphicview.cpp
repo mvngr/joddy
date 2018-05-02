@@ -1,7 +1,6 @@
 #include "joddygraphicview.h"
 
-JoddyGraphicView::JoddyGraphicView(QWidget *parent) : QGraphicsView(parent)
-{
+JoddyGraphicView::JoddyGraphicView(QWidget *parent) : QGraphicsView(parent){
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setAlignment(Qt::AlignCenter);
@@ -18,10 +17,16 @@ JoddyGraphicView::JoddyGraphicView(QWidget *parent) : QGraphicsView(parent)
     group_2 = new QGraphicsItemGroup();
 
     gPoints_ = new QGraphicsItemGroup();
+    placeholder_ = new QGraphicsItemGroup();
+
+    svgPlaceholder_ = new QGraphicsSvgItem("source/logo.svg");
+    svgPlaceholder_->setTransform(QTransform(0.5, 0, 0, 0.5, 0, 0));
+    placeholder_->addToGroup(svgPlaceholder_);
 
     scene->addItem(group_1);
     scene->addItem(group_2);
     scene->addItem(gPoints_);
+    scene->addItem(placeholder_);
 
     temp = false;
 
@@ -29,15 +34,12 @@ JoddyGraphicView::JoddyGraphicView(QWidget *parent) : QGraphicsView(parent)
     connect(mapUpdate_, SIGNAL(timeout()), this, SLOT(slotAlarmTimer()));
     mapUpdate_->start(50);
 }
-JoddyGraphicView::~JoddyGraphicView()
-{
-
-}
-void JoddyGraphicView::slotAlarmTimer()
-{
+JoddyGraphicView::~JoddyGraphicView(){}
+void JoddyGraphicView::slotAlarmTimer(){
     this->deleteItemsFromGroup(group_1);
     this->deleteItemsFromGroup(group_2);
-    //this->deleteItemsFromGroup(gPoints_);
+    if(points_->size() != 0)
+        this->deleteItemsFromGroup(placeholder_);
 
     int width = this->width();
     int height = this->height();
@@ -46,23 +48,27 @@ void JoddyGraphicView::slotAlarmTimer()
 
     QPen penBlack(Qt::black);
     QPen penBuild(Qt::black);
+    QPen penWay(Qt::darkGray);
+
+
 
     if(!temp && points_->size() != 0){
-        for(int i = 0; i < buildings_->size(); i++){
+        for(int i = 0; i < buildings_->length(); i++){
             auto p = buildings_->at(i)->getPolygon();
             gPoints_->addToGroup(scene->addPolygon(p, penBuild, QBrush(QColor(205,245,248))));
-            qDebug() << "poly loaded";
         }
-        for(int i = 0; i < points_->size(); i++) {
-            QPointF f = points_->at(i);
-            gPoints_->addToGroup(scene->addEllipse(f.rx(), f.ry(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
-            qDebug() << "point loaded";
+        for(int i = 0; i < ways_->length(); i++){
+            gPoints_->addToGroup(scene->addPolygon(ways_->at(i)->getPolygon(), penWay, QBrush(QColor(0,0,0,0))));
         }
-
+//        for(int i = 0; i < points_->size(); i++) {
+//            QPointF f = points_->at(i);
+//            gPoints_->addToGroup(scene->addEllipse(f.rx(), f.ry(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
+//        }
+//        gPoints_->setScale(0.1);
+//        gPoints_->transform().translate(500,600);
 
         temp = true;
     }
-
 
     /*
     QPen penBlack(Qt::black);
@@ -88,13 +94,22 @@ void JoddyGraphicView::slotAlarmTimer()
                                        */
     return;
 }
-void JoddyGraphicView::resizeEvent(QResizeEvent *event)
-{
+void JoddyGraphicView::printDots(){
+    this->deleteItemsFromGroup(gPoints_);
+
+    QPen penBlack(Qt::black);
+
+    for(int i = 0; i < points_->size(); i++) {
+        QPointF f = points_->at(i);
+        gPoints_->addToGroup(scene->addEllipse(f.rx(), f.ry(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
+    }
+
+}
+void JoddyGraphicView::resizeEvent(QResizeEvent *event){
     QGraphicsView::resizeEvent(event);
     return;
 }
-void JoddyGraphicView::deleteItemsFromGroup(QGraphicsItemGroup *group)
-{
+void JoddyGraphicView::deleteItemsFromGroup(QGraphicsItemGroup *group){
     foreach( QGraphicsItem *item, scene->items(group->boundingRect()))
         if(item->group() == group )
             delete item;
@@ -104,7 +119,11 @@ void JoddyGraphicView::setPoints(QList<QPointF> *list){
     points_ = list;
     return;
 }
-void JoddyGraphicView::setBuildings(QList<Building * > * list){
+void JoddyGraphicView::setBuildings(QList<Building *> *list){
     buildings_ = list;
+    return;
+}
+void JoddyGraphicView::setWays(QList<Way *> *list){
+    ways_ = list;
     return;
 }

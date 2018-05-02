@@ -6,6 +6,7 @@
 #include <QString>
 #include <QFileDialog>
 #include <QLabel>
+#include <QTime>
 #include <joddygraphicview.h>
 #include <joddycontroller.h>
 #include <osmparser.h>

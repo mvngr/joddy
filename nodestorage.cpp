@@ -15,7 +15,7 @@ void NodeStorage::setBounds(double minlat, double minlon, double maxlat, double 
 void NodeStorage::addNode(QString id, double lat, double lon){
     nodes_.push_back(* new QPointF(lat, lon));
     association_.insert(id, nodes_.length() - 1);
-    qDebug() << "Node added. Array id:" << nodes_.length() - 1 << "Xml id:" << id;
+    //qDebug() << "Node added. Array id:" << nodes_.length() - 1 << "Xml id:" << id;
     return;
 }
 QList<QPointF> * NodeStorage::getNodes(){

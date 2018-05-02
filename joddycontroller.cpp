@@ -4,6 +4,7 @@ JoddyController::JoddyController()
 {
     nodeStorage_ = new NodeStorage();
     buildings_ = new QList<Building *>;
+    ways_ = new QList<Way *>;
 
 }
 NodeStorage * JoddyController::getNodeStorage(){
@@ -13,10 +14,16 @@ void JoddyController::setMap(JoddyGraphicView *map){
     map_ = map;
     map_->setPoints(nodeStorage_->getNodes());
     map_->setBuildings(buildings_);
+    map_->setWays(ways_);
     return;
 }
 void JoddyController::setBuilding(Building * b){
     buildings_->push_back(b);
-    buildings_->last()->setPolygon(QPolygonF(buildings_->last()->getPoints().toVector())); //TODO buildings have 0 point size
+    buildings_->last()->setPolygon(QPolygonF(buildings_->last()->getPoints().toVector()));
+    return;
+}
+void JoddyController::setWay(Way *w){
+    ways_->push_back(w);
+    ways_->last()->setPolygon(QPolygonF(ways_->last()->getPoints().toVector()));
     return;
 }

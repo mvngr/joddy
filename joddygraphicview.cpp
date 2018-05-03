@@ -1,21 +1,26 @@
 #include "joddygraphicview.h"
 
 JoddyGraphicView::JoddyGraphicView(QWidget *parent) : QGraphicsView(parent){
+
+    //area settings
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setAlignment(Qt::AlignCenter);
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     this->setRenderHint(QPainter::Antialiasing);
-
     this->setMinimumHeight(100);
     this->setMinimumWidth(100);
-
     scene = new QGraphicsScene();
     this->setScene(scene);
 
-    group_1 = new QGraphicsItemGroup();
-    group_2 = new QGraphicsItemGroup();
 
+    //init values
+    zoom_ = ZOOM_DEF;
+    dx_ = 0;
+    dy_ = 0;
+
+
+    //init view items
     gPoints_ = new QGraphicsItemGroup();
     placeholder_ = new QGraphicsItemGroup();
 
@@ -23,8 +28,6 @@ JoddyGraphicView::JoddyGraphicView(QWidget *parent) : QGraphicsView(parent){
     svgPlaceholder_->setTransform(QTransform(0.5, 0, 0, 0.5, 0, 0));
     placeholder_->addToGroup(svgPlaceholder_);
 
-    scene->addItem(group_1);
-    scene->addItem(group_2);
     scene->addItem(gPoints_);
     scene->addItem(placeholder_);
 
@@ -35,9 +38,8 @@ JoddyGraphicView::JoddyGraphicView(QWidget *parent) : QGraphicsView(parent){
     mapUpdate_->start(50);
 }
 JoddyGraphicView::~JoddyGraphicView(){}
+
 void JoddyGraphicView::slotAlarmTimer(){
-    this->deleteItemsFromGroup(group_1);
-    this->deleteItemsFromGroup(group_2);
     if(points_->size() != 0)
         this->deleteItemsFromGroup(placeholder_);
 
@@ -53,6 +55,7 @@ void JoddyGraphicView::slotAlarmTimer(){
 
 
     if(!temp && points_->size() != 0){
+        this->deleteItemsFromGroup(gPoints_);
         for(int i = 0; i < buildings_->length(); i++){
             auto p = buildings_->at(i)->getPolygon();
             gPoints_->addToGroup(scene->addPolygon(p, penBuild, QBrush(QColor(205,245,248))));
@@ -64,8 +67,8 @@ void JoddyGraphicView::slotAlarmTimer(){
 //            QPointF f = points_->at(i);
 //            gPoints_->addToGroup(scene->addEllipse(f.rx(), f.ry(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
 //        }
-//        gPoints_->setScale(0.1);
-//        gPoints_->transform().translate(500,600);
+        gPoints_->setScale(zoom_);
+        gPoints_->transform().translate(dx_,dy_);
 
         temp = true;
     }
@@ -109,6 +112,34 @@ void JoddyGraphicView::resizeEvent(QResizeEvent *event){
     QGraphicsView::resizeEvent(event);
     return;
 }
+void JoddyGraphicView::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    QPointF point = event->pos();
+    temp = false;
+    dx_ = point.x();
+    dy_ = point.y();
+    slotAlarmTimer();
+}
+
+void JoddyGraphicView::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    this->setCursor(QCursor(Qt::ClosedHandCursor));
+    Q_UNUSED(event);
+}
+
+void JoddyGraphicView::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    this->setCursor(QCursor(Qt::ArrowCursor));
+    Q_UNUSED(event);
+}
+void JoddyGraphicView::dragEnterEvent(QDragEnterEvent *event){
+    QPoint point = event->pos();
+    temp = false;
+    dx_ = point.x();
+    dy_ = point.y();
+    slotAlarmTimer();
+    return;
+}
 void JoddyGraphicView::deleteItemsFromGroup(QGraphicsItemGroup *group){
     foreach( QGraphicsItem *item, scene->items(group->boundingRect()))
         if(item->group() == group )
@@ -125,5 +156,17 @@ void JoddyGraphicView::setBuildings(QList<Building *> *list){
 }
 void JoddyGraphicView::setWays(QList<Way *> *list){
     ways_ = list;
+    return;
+}
+void JoddyGraphicView::zoomIn(){
+    zoom_ = (zoom_ < 2.4) ? (zoom_ + ZOOM_DELTA) : zoom_;
+    temp = false;
+    slotAlarmTimer();
+    return;
+}
+void JoddyGraphicView::zoomOut(){
+    zoom_ = (zoom_ > 0.3) ? (zoom_ - ZOOM_DELTA) : zoom_;
+    temp = false;
+    slotAlarmTimer();
     return;
 }

@@ -7,6 +7,7 @@
 #include <QFileDialog>
 #include <QLabel>
 #include <QTime>
+#include <QToolButton>
 #include <joddygraphicview.h>
 #include <joddycontroller.h>
 #include <osmparser.h>
@@ -26,8 +27,15 @@ public:
 
 private slots:
     void on_openFile_triggered();
+    void zoom_in_triggered();
+    void zoom_out_triggered();
+    void on_openMap1_triggered();
+    void on_openMap2_triggered();
+    void on_openMap3_triggered();
 
 private:
+    double zoom_;
+    void on_openMap_triggered(QString path);
     Ui::MainWindow *ui;
     JoddyGraphicView *map_;
     JoddyController *controller_;

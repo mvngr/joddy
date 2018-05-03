@@ -37,4 +37,4 @@ QPointF NodeStorage::getPoint(QString number){
     if(!isResized_)
         resizePlace();
     return association_.contains(number) ? nodes_[association_[number]] : QPointF(0,0);
-    }
+}

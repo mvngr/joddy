@@ -49,4 +49,7 @@ FORMS += \
         mainwindow.ui
 
 DISTFILES += \
-    source/logo.svg
+    source/logo.svg \
+    source/logo.svg \
+    source/zoom-in-button.svg \
+    source/zoom-out-button.svg

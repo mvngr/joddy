@@ -17,7 +17,6 @@ bool OsmParser::readFile(){
     QXmlStreamReader xml(file_);
 
     QList<QString> temp_str_points_id = * new QList<QString>;
-    bool renderPointsIsAlreadyCalled = false;
 
     //public => public_building
     QList<QString> types_to_numbers = * new QList<QString>

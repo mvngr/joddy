@@ -61,14 +61,16 @@ void JoddyGraphicView::slotAlarmTimer(){
             gPoints_->addToGroup(scene->addPolygon(p, penBuild, QBrush(QColor(205,245,248))));
         }
         for(int i = 0; i < ways_->length(); i++){
-            gPoints_->addToGroup(scene->addPolygon(ways_->at(i)->getPolygon(), penWay, QBrush(QColor(0,0,0,0))));
+            for(int j = 0; j < ways_->at(i)->getPathLine()->size(); j++)
+                gPoints_->addToGroup(scene->addLine(ways_->at(i)->getPathLine()->at(j), penWay));
         }
 //        for(int i = 0; i < points_->size(); i++) {
 //            QPointF f = points_->at(i);
 //            gPoints_->addToGroup(scene->addEllipse(f.rx(), f.ry(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
 //        }
-        gPoints_->setScale(zoom_);
-        gPoints_->transform().translate(dx_,dy_);
+        //gPoints_->setScale(zoom_);
+        gPoints_->setTransform(QTransform(zoom_, 0, 0, zoom_, dx_, dy_));
+        //gPoints_->transform().translate(dx_,dy_);
 
         temp = true;
     }

@@ -24,6 +24,6 @@ void JoddyController::setBuilding(Building * b){
 }
 void JoddyController::setWay(Way *w){
     ways_->push_back(w);
-    ways_->last()->setPolygon(QPolygonF(ways_->last()->getPoints().toVector()));
+    ways_->last()->setPathLine(ways_->last()->getPoints());
     return;
 }

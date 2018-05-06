@@ -4,20 +4,20 @@
 #include <object.h>
 #include <QString>
 #include <QDebug>
-#include <QPolygon>
+#include <QLine>
 
 class Way : Object
 {
 public:
     Way();
     Way(QList<QPointF> points);
-    QPolygonF getPolygon();
+    QList<QLineF> * getPathLine();
     QList<QPointF> getPoints();
 
-    void setPolygon(QPolygonF polygon);
+    void setPathLine(QList<QPointF> polygon);
 
 private:
-    QPolygonF poly_;
+    QList<QLineF> poly_;
 };
 
 #endif // WAY_H

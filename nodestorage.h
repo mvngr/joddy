@@ -21,7 +21,6 @@ private:
     QList<QPointF> nodes_;
     QMap<QString, int> association_;
 
-
     double minLat_;
     double minLon_;
     double corrLat_;

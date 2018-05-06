@@ -4,10 +4,11 @@
 
 На данный момент приложение находится в стадии разработки. Степень ее готовности можно увидеть на скриншоте ниже
 
-![Скриншот #3](https://imgur.com/ZiUPhWE.png)
+![Скриншот #4](https://i.imgur.com/oUQDtOQ.png)
 
 Скриншоты предыдущих версий:
 
+[![Скриншот #3](https://imgur.com/ZiUPhWEm.png)](https://imgur.com/ZiUPhWE.png)
 [![Скриншот #2](https://i.imgur.com/m8GHWk3m.png)](https://i.imgur.com/m8GHWk3.png)
 [![Скриншот #1](https://i.imgur.com/UNqMjcYm.png?1)](https://i.imgur.com/UNqMjcY.png?1)
 

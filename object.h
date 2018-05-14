@@ -9,7 +9,7 @@
 class Object
 {
 public:
-    enum Materials {wood, metal, brass, bronze, steel, concrete, reinforced_concrete, stone, granite, sandstone, masonry, brick, plastic, soil, glass};
+    enum class Materials {wood, metal, brass, bronze, steel, concrete, reinforced_concrete, stone, granite, sandstone, masonry, brick, plastic, soil, glass};
 
 protected:
     Object();

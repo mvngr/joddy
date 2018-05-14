@@ -12,6 +12,7 @@
 #include <joddycontroller.h>
 #include <osmparser.h>
 #include <building.h>
+#include <settings.h>
 
 namespace Ui {
 class MainWindow;

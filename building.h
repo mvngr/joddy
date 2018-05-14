@@ -9,7 +9,7 @@
 class Building : Object
 {
 public:
-    enum Types{yes, apartments, farm, hotel, house, detached, residential, dormitory, terrace, houseboat, bungalow, static_caravan, commercial,
+    enum class Types{yes, apartments, farm, hotel, house, detached, residential, dormitory, terrace, houseboat, bungalow, static_caravan, commercial,
                industrial, retail, warehouse, kiosk, cabin, religious, cathedral, chapel, church, mosque, temple, synagogue, shrine, bakehouse,
                kindergarten, civic, hospital, school, stadium, train_station, transportation, university, grandstand, public_building, barn,
                bridge, bunker, carport, conservatory, construction, cowshed, digester, farm_auxiliary, garage, garages, garbage_shed, greenhouse,
@@ -22,7 +22,7 @@ public:
     QString getStreetName();
     QString getNumber();
     int getLevels();
-    //QString getType();
+    Types getType();
     //QString getMaterial();
     QList<QPointF> getPoints();
     QPolygonF getPolygon();

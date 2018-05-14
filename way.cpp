@@ -3,7 +3,7 @@
 Way::Way(){
     poly_ = * new QList<QLineF>;
 }
-Way::Way(QList<QPointF> points):Object(points, Object::stone){
+Way::Way(QList<QPointF> points):Object(points, Object::Materials::stone){
     poly_ = * new QList<QLineF>;
 }
 

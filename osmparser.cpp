@@ -51,11 +51,12 @@ bool OsmParser::readFile(){
                 temp_str_points_id.push_back(xml.attributes().value("ref").toString());
             }
 
-            if(xml.name() == "tag" && xml.attributes().hasAttribute("k") && xml.attributes().value("k") == "building"){
+            if(xml.name() == "tag" && xml.attributes().hasAttribute("k") && xml.attributes().value("k") == "building" && xml.attributes().hasAttribute("v")){
                 QList<QPointF> temp_points = * new QList<QPointF>;
                 foreach (QString id, temp_str_points_id)
                     temp_points.push_back(controller_->getNodeStorage()->getPoint(id));
-                controller_->setBuilding(new Building(temp_points, Building::yes, Object::metal));
+                int type = types_to_numbers.indexOf(xml.attributes().value("v").toString());
+                controller_->setBuilding(new Building(temp_points, Building::Types(type), Object::Materials::metal));
                 temp_str_points_id.clear();
             }
 

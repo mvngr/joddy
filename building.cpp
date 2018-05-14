@@ -31,10 +31,10 @@ void Building::setLevels(int levels){
     levels_ = levels;
     return;
 }
-/*
-QString Building::getType(){
-    return types_to_numbers_[type_];
+Building::Types Building::getType(){
+    return type_;
 }
+/*
 void Building::setType(int type){
     type_ = static_cast<Types>(type >= 0 && type < types_to_numbers_.size() ? type : 0);
     return;

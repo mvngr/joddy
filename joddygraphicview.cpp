@@ -57,17 +57,17 @@ void JoddyGraphicView::slotAlarmTimer(){
     if(!temp && points_->size() != 0){
         this->deleteItemsFromGroup(gPoints_);
         for(int i = 0; i < buildings_->length(); i++){
-            auto p = buildings_->at(i)->getPolygon();
-            gPoints_->addToGroup(scene->addPolygon(p, penBuild, QBrush(QColor(205,245,248))));
+            Building::Types type = buildings_->at(i)->getType();
+            gPoints_->addToGroup(scene->addPolygon(buildings_->at(i)->getPolygon(), typeToStrokeColor(type), typeToFillColor(type)));
         }
         for(int i = 0; i < ways_->length(); i++){
             for(int j = 0; j < ways_->at(i)->getPathLine()->size(); j++)
                 gPoints_->addToGroup(scene->addLine(ways_->at(i)->getPathLine()->at(j), penWay));
         }
-//        for(int i = 0; i < points_->size(); i++) {
-//            QPointF f = points_->at(i);
-//            gPoints_->addToGroup(scene->addEllipse(f.rx(), f.ry(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
-//        }
+        //        for(int i = 0; i < points_->size(); i++) {
+        //            QPointF f = points_->at(i);
+        //            gPoints_->addToGroup(scene->addEllipse(f.rx(), f.ry(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
+        //        }
         //gPoints_->setScale(zoom_);
         gPoints_->setTransform(QTransform(zoom_, 0, 0, zoom_, dx_, dy_));
         //gPoints_->transform().translate(dx_,dy_);
@@ -171,4 +171,18 @@ void JoddyGraphicView::zoomOut(){
     temp = false;
     slotAlarmTimer();
     return;
+}
+QColor JoddyGraphicView::typeToStrokeColor(Building::Types type){
+    switch (type) {
+    case Building::Types::apartments: return QColor(10,128,10); break;
+    case Building::Types::yes: return QColor(200,200,200); break;
+
+    default: return QColor(255,0,0); break;
+    }
+}
+QColor JoddyGraphicView::typeToFillColor(Building::Types type){
+    QColor temp = typeToStrokeColor(type);
+    return QColor(temp.red() + DELTA_STROKE_AND_FILL_COLOR < 255 ? temp.red() + DELTA_STROKE_AND_FILL_COLOR : temp.red(),
+                  temp.green() + DELTA_STROKE_AND_FILL_COLOR < 255 ? temp.green() + DELTA_STROKE_AND_FILL_COLOR : temp.green(),
+                  temp.blue() + DELTA_STROKE_AND_FILL_COLOR < 255 ? temp.blue() + DELTA_STROKE_AND_FILL_COLOR : temp.blue());
 }

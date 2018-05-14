@@ -33,7 +33,8 @@ SOURCES += \
     nodestorage.cpp \
     object.cpp \
     building.cpp \
-    way.cpp
+    way.cpp \
+    settings.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -43,7 +44,8 @@ HEADERS += \
     nodestorage.h \
     object.h \
     building.h \
-    way.h
+    way.h \
+    settings.h
 
 FORMS += \
         mainwindow.ui
@@ -52,4 +54,5 @@ DISTFILES += \
     source/logo.svg \
     source/logo.svg \
     source/zoom-in-button.svg \
-    source/zoom-out-button.svg
+    source/zoom-out-button.svg \
+    settings.json

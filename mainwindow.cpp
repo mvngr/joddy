@@ -45,6 +45,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(openMap2, SIGNAL(clicked(bool)), this, SLOT(on_openMap2_triggered()));
     connect(openMap3, SIGNAL(clicked(bool)), this, SLOT(on_openMap3_triggered()));
 
+    Settings * s = new Settings();
+    s->readSettingsFromFile();
+    qDebug() << s->getColor(Building::Types::yes);
+
     //Building b = * new Building();
 
 }

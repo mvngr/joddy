@@ -12,7 +12,8 @@
 #include <QtSvg/QGraphicsSvgItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneMoveEvent>
-#include <QDir>
+
+#define DELTA_STROKE_AND_FILL_COLOR 40
 
 #define ZOOM_DEF 1.0
 #define ZOOM_DELTA 0.1
@@ -45,7 +46,6 @@ private:
 
     QGraphicsSvgItem *svgPlaceholder_;
 
-private:
     QTimer *mapUpdate_;
     QList<QPointF> *points_;
     QList<Building *> *buildings_;
@@ -58,6 +58,9 @@ private:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void deleteItemsFromGroup(QGraphicsItemGroup *group_1);
+
+    QColor typeToStrokeColor(Building::Types type);
+    QColor typeToFillColor(Building::Types type);
 };
 
 #endif // JODDYGRAPHICVIEW_H

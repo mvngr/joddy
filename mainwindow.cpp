@@ -44,13 +44,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(openMap1, SIGNAL(clicked(bool)), this, SLOT(on_openMap1_triggered()));
     connect(openMap2, SIGNAL(clicked(bool)), this, SLOT(on_openMap2_triggered()));
     connect(openMap3, SIGNAL(clicked(bool)), this, SLOT(on_openMap3_triggered()));
-
-    Settings * s = new Settings();
-    s->readSettingsFromFile();
-    qDebug() << s->getColor(Building::Types::yes);
-
-    //Building b = * new Building();
-
 }
 
 MainWindow::~MainWindow()
@@ -77,6 +70,11 @@ void MainWindow::on_openMap_triggered(QString path){
     parser_ = new OsmParser(path, controller_);
     parser_->readFile();
     qDebug("Time elapsed: %d ms", t.elapsed());
+}
+void MainWindow::on_openSettings_triggered(){
+    ColorSettingsWindow * v = new ColorSettingsWindow(controller_, this);
+    v->setWindowFlags(v->windowFlags() & ~Qt::WindowContextHelpButtonHint); //remove "?" in window title
+    v->show();
 }
 void MainWindow::zoom_in_triggered(){
     map_->zoomIn();

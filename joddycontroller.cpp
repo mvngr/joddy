@@ -3,12 +3,16 @@
 JoddyController::JoddyController()
 {
     nodeStorage_ = new NodeStorage();
+    settings_ = new Settings();
     buildings_ = new QList<Building *>;
     ways_ = new QList<Way *>;
 
 }
 NodeStorage * JoddyController::getNodeStorage(){
     return nodeStorage_;
+}
+Settings * JoddyController::getSettings(){
+    return settings_;
 }
 void JoddyController::setMap(JoddyGraphicView *map){
     map_ = map;

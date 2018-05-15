@@ -34,7 +34,8 @@ SOURCES += \
     object.cpp \
     building.cpp \
     way.cpp \
-    settings.cpp
+    settings.cpp \
+    colorsettingswindow.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -45,10 +46,12 @@ HEADERS += \
     object.h \
     building.h \
     way.h \
-    settings.h
+    settings.h \
+    colorsettingswindow.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    colorsettingswindow.ui
 
 DISTFILES += \
     source/logo.svg \

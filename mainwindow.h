@@ -13,6 +13,7 @@
 #include <osmparser.h>
 #include <building.h>
 #include <settings.h>
+#include <colorsettingswindow.h>
 
 namespace Ui {
 class MainWindow;
@@ -28,6 +29,7 @@ public:
 
 private slots:
     void on_openFile_triggered();
+    void on_openSettings_triggered();
     void zoom_in_triggered();
     void zoom_out_triggered();
     void on_openMap1_triggered();

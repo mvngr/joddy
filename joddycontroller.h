@@ -4,12 +4,14 @@
 #include <joddygraphicview.h>
 #include <building.h>
 #include <way.h>
+#include <settings.h>
 
 class JoddyController
 {
 public:
     JoddyController();
     NodeStorage *getNodeStorage();
+    Settings *getSettings();
 
     void setMap(JoddyGraphicView *map);
     void setBuilding(Building *b);
@@ -20,6 +22,7 @@ private:
     JoddyGraphicView *map_;
     QList<Building *> *buildings_;
     QList<Way *> *ways_;
+    Settings *settings_;
 
 };
 

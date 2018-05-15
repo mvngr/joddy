@@ -37,6 +37,7 @@
      <string>Файл</string>
     </property>
     <addaction name="openFile"/>
+    <addaction name="openSettings"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -67,7 +68,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
   </widget>
   <action name="openFile">
@@ -76,6 +77,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="openSettings">
+   <property name="text">
+    <string>Настройки...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
    </property>
   </action>
  </widget>

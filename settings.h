@@ -24,13 +24,16 @@ class Settings
 public:
     Settings();
 
+    const int typesCount = 43;
 
     bool readSettingsFromFile();
 
-    QColor getColor(Building::Types type);
+    QColor getColor(int type);
+    bool setColor(int index, QColor color);
+    QString getTypeAsString(int type);
 
 private:
-    QString getTypeAsString(Building::Types type);
+    bool saveSettings();
     QVariantMap json_settings_;
     QFile file_;
     bool settings_loaded_;

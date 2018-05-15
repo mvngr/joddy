@@ -3,6 +3,7 @@
 Settings::Settings()
 {
     settings_loaded_ = false;
+    readSettingsFromFile();
 }
 bool Settings::readSettingsFromFile(){
     QFile file_obj((QString)DEFAULT_NAME_OF_SETTINGS + (QString)".json");
@@ -36,17 +37,17 @@ bool Settings::readSettingsFromFile(){
     settings_loaded_ = true;
     return true;
 }
-QColor Settings::getColor(Building::Types type){
+QColor Settings::getColor(int type){
     if(!settings_loaded_){
         throw "The settings file is not found";
         return QColor(255,0,0);
     }
 
-    QVariantMap rgb = json_settings_[getTypeAsString(type)].toMap();
+    QVariantMap rgb = json_settings_[getTypeAsString((int)type)].toMap();
     return QColor(rgb["r"].toInt(), rgb["g"].toInt(), rgb["b"].toInt());
 }
-QString Settings::getTypeAsString(Building::Types type){
-    switch ((int)type) {
+QString Settings::getTypeAsString(int type){
+    switch (type) {
     case 0 : return "yes"; break;
     case 1 : return "apartments"; break;
     case 2 : return "farm"; break;
@@ -83,7 +84,7 @@ QString Settings::getTypeAsString(Building::Types type){
     case 33 : return "transportation"; break;
     case 34 : return "university"; break;
     case 35 : return "grandstand"; break;
-    case 36 : return "public_building"; break;
+    case 36 : return "public"; break;
     case 37 : return "barn"; break;
     case 38 : return "bridge"; break;
     case 39 : return "bunker"; break;
@@ -112,4 +113,28 @@ QString Settings::getTypeAsString(Building::Types type){
     case 62 : return "water_tower"; break;
     default: return "ERROR"; break;
     }
+}
+bool Settings::setColor(int index, QColor color){
+    QVariantMap m;
+    m["r"] = color.red();
+    m["g"] = color.green();
+    m["b"] = color.blue();
+    json_settings_[getTypeAsString(index)].setValue(m);
+    saveSettings();
+    return true;
+}
+bool Settings::saveSettings(){
+    QFile file_obj((QString)DEFAULT_NAME_OF_SETTINGS + (QString)".json");
+    if (!file_obj.open(QIODevice::WriteOnly)) {
+        qDebug() << "Failed to open " << DEFAULT_NAME_OF_SETTINGS << ".json";
+        return false;
+    }
+    if(json_settings_.isEmpty())
+        return false;
+    QJsonObject obj;
+    QJsonDocument * d = new QJsonDocument( obj.fromVariantMap(json_settings_) );
+
+    file_obj.write(d->toJson());
+    file_obj.close();
+    return true;
 }

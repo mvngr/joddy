@@ -1,6 +1,6 @@
 #include "joddygraphicview.h"
 
-JoddyGraphicView::JoddyGraphicView(QWidget *parent) : QGraphicsView(parent){
+JoddyGraphicView::JoddyGraphicView(Settings *settings, QWidget *parent) : QGraphicsView(parent){
 
     //area settings
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -21,6 +21,7 @@ JoddyGraphicView::JoddyGraphicView(QWidget *parent) : QGraphicsView(parent){
 
 
     //init view items
+    s_ = settings;
     gPoints_ = new QGraphicsItemGroup();
     placeholder_ = new QGraphicsItemGroup();
 
@@ -173,12 +174,7 @@ void JoddyGraphicView::zoomOut(){
     return;
 }
 QColor JoddyGraphicView::typeToStrokeColor(Building::Types type){
-    switch (type) {
-    case Building::Types::apartments: return QColor(10,128,10); break;
-    case Building::Types::yes: return QColor(200,200,200); break;
-
-    default: return QColor(255,0,0); break;
-    }
+    return s_->getColor((int)type);
 }
 QColor JoddyGraphicView::typeToFillColor(Building::Types type){
     QColor temp = typeToStrokeColor(type);

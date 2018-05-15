@@ -17,26 +17,58 @@
    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Для того, чтобы сменить цвет того или иного типа объектов нажмите на цвет возле соответствующей надписи и выберите новый цвет&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
-    <widget class="QScrollArea" name="scrollArea">
-     <property name="lineWidth">
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
       <number>0</number>
      </property>
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>380</width>
-        <height>280</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Tab 1</string>
+      </attribute>
+      <widget class="QCheckBox" name="checkBox">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>20</y>
+         <width>221</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Отображать границы</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="title">
+       <string>Tab 2</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <layout class="QVBoxLayout" name="list"/>
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="lineWidth">
+          <number>0</number>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>356</width>
+            <height>236</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <layout class="QVBoxLayout" name="list"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
        </item>
       </layout>
      </widget>

@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     controller_ = new JoddyController();
-    map_ = new JoddyGraphicView();
+    map_ = new JoddyGraphicView(controller_->getSettings());
     controller_->setMap(map_);
     progress_ = new QLabel(this);
 

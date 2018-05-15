@@ -12,6 +12,7 @@
 #include <QtSvg/QGraphicsSvgItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneMoveEvent>
+#include <settings.h>
 
 #define DELTA_STROKE_AND_FILL_COLOR 40
 
@@ -22,7 +23,7 @@ class JoddyGraphicView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit JoddyGraphicView(QWidget *parent = 0);
+    explicit JoddyGraphicView(Settings *settings, QWidget *parent = 0);
     ~JoddyGraphicView();
     void setPoints(QList<QPointF> *list);
     void setBuildings(QList<Building *> *list);
@@ -46,6 +47,7 @@ private:
 
     QGraphicsSvgItem *svgPlaceholder_;
 
+    Settings * s_;
     QTimer *mapUpdate_;
     QList<QPointF> *points_;
     QList<Building *> *buildings_;

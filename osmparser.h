@@ -15,7 +15,7 @@ public:
 
     bool readFile();
 private:
-    JoddyController * controller_;
+    JoddyController * jc_;
     QString path_;
     QFile *file_;
 };

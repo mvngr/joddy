@@ -31,12 +31,16 @@ public:
     QColor getColor(int type);
     bool setColor(int index, QColor color);
     QString getTypeAsString(int type);
+    void setOpenFileDefPath(QString path);
+    QString getOpenFileDefPath();
 
 private:
     bool saveSettings();
     QVariantMap json_settings_;
+    QVariantMap color_settings_;
     QFile file_;
     bool settings_loaded_;
+    QString openFileDefinePath_;
 
 };
 

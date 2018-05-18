@@ -7,6 +7,9 @@
 #include <QPixmap>
 #include <QLabel>
 #include <QColorDialog>
+#include <QTextEdit>
+#include <QTextDocumentFragment>
+#include <QFileDialog>
 
 #include <joddycontroller.h>
 
@@ -33,6 +36,7 @@ private:
     Ui::ColorSettingsWindow *ui;
 private slots:
     void onColorClicked();
+    void on_defOpenFilePathBtn_clicked();
 };
 
 #endif // COLORSETTINGSWINDOW_H

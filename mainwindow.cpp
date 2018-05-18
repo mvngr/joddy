@@ -7,9 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    controller_ = new JoddyController();
-    map_ = new JoddyGraphicView(controller_->getSettings());
-    controller_->setMap(map_);
+    jc_ = new JoddyController();
+    map_ = new JoddyGraphicView(jc_->getSettings());
+    jc_->setMap(map_);
     progress_ = new QLabel(this);
 
     progress_->setText("Status: done");
@@ -53,12 +53,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_openFile_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("OpenStreetMap Files (*.osm)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Открыть файл"), jc_->getSettings()->getOpenFileDefPath(), tr("OpenStreetMap Files (*.osm)"));
 
     if (fileName != "") {
         QTime t;
         t.start();
-        parser_ = new OsmParser(fileName, controller_);
+        parser_ = new OsmParser(fileName, jc_);
         parser_->readFile();
         qDebug("Time elapsed: %d ms", t.elapsed());
     }
@@ -67,12 +67,12 @@ void MainWindow::on_openMap_triggered(QString path){
 
     QTime t;
     t.start();
-    parser_ = new OsmParser(path, controller_);
+    parser_ = new OsmParser(path, jc_);
     parser_->readFile();
     qDebug("Time elapsed: %d ms", t.elapsed());
 }
 void MainWindow::on_openSettings_triggered(){
-    ColorSettingsWindow * v = new ColorSettingsWindow(controller_, this);
+    ColorSettingsWindow * v = new ColorSettingsWindow(jc_, this);
     v->setWindowFlags(v->windowFlags() & ~Qt::WindowContextHelpButtonHint); //remove "?" in window title
     v->show();
 }

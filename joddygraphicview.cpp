@@ -65,39 +65,12 @@ void JoddyGraphicView::slotAlarmTimer(){
             for(int j = 0; j < ways_->at(i)->getPathLine()->size(); j++)
                 gPoints_->addToGroup(scene->addLine(ways_->at(i)->getPathLine()->at(j), penWay));
         }
-        //        for(int i = 0; i < points_->size(); i++) {
-        //            QPointF f = points_->at(i);
-        //            gPoints_->addToGroup(scene->addEllipse(f.rx(), f.ry(), 1, 1, penBlack, QBrush(Qt::SolidPattern)));
-        //        }
         //gPoints_->setScale(zoom_);
         gPoints_->setTransform(QTransform(zoom_, 0, 0, zoom_, dx_, dy_));
         //gPoints_->transform().translate(dx_,dy_);
 
         temp = true;
     }
-
-    /*
-    QPen penBlack(Qt::black);
-    QPen penRed(Qt::red);
-
-    group_1->addToGroup(scene->addLine(20,20, width - 20, 20, penBlack));
-    group_1->addToGroup(scene->addLine(width - 20, 20, width - 20, height -20, penBlack));
-    group_1->addToGroup(scene->addLine(width - 20, height -20, 20, height -20, penBlack));
-    group_1->addToGroup(scene->addLine(20, height -20, 20, 20, penBlack));
-
-    int sideOfSquare = (height > width) ? (width - 60) : (height - 60);
-    int centerOfWidget_X = width/2;
-    int centerOfWidget_Y = height/2;
-
-    group_2->addToGroup(scene->addLine(centerOfWidget_X - (sideOfSquare/2), centerOfWidget_Y - (sideOfSquare/2),
-                                       centerOfWidget_X + (sideOfSquare/2), centerOfWidget_Y - (sideOfSquare/2), penRed));
-    group_2->addToGroup(scene->addLine(centerOfWidget_X + (sideOfSquare/2), centerOfWidget_Y - (sideOfSquare/2),
-                                       centerOfWidget_X + (sideOfSquare/2), centerOfWidget_Y + (sideOfSquare/2), penRed));
-    group_2->addToGroup(scene->addLine(centerOfWidget_X + (sideOfSquare/2), centerOfWidget_Y + (sideOfSquare/2),
-                                       centerOfWidget_X - (sideOfSquare/2), centerOfWidget_Y + (sideOfSquare/2), penRed));
-    group_2->addToGroup(scene->addLine(centerOfWidget_X - (sideOfSquare/2), centerOfWidget_Y + (sideOfSquare/2),
-                                       centerOfWidget_X - (sideOfSquare/2), centerOfWidget_Y - (sideOfSquare/2), penRed));
-                                       */
     return;
 }
 void JoddyGraphicView::printDots(){

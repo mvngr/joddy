@@ -41,7 +41,7 @@ private:
     void on_openMap_triggered(QString path);
     Ui::MainWindow *ui;
     JoddyGraphicView *map_;
-    JoddyController *controller_;
+    JoddyController *jc_;
     OsmParser *parser_;
     QLabel *progress_;
 };

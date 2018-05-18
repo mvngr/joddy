@@ -10,6 +10,7 @@ ColorSettingsWindow::ColorSettingsWindow(JoddyController *controller, QWidget *p
     jc_ = controller;
 
     colorsList_ = ui->list;
+    ui->defOpenFilePathLine->setText(jc_->getSettings()->getOpenFileDefPath());
 
     for(int i = 0; i < jc_->getSettings()->typesCount; i++){
         QHBoxLayout *rowLayout = new QHBoxLayout(this);
@@ -29,7 +30,6 @@ ColorSettingsWindow::ColorSettingsWindow(JoddyController *controller, QWidget *p
 
         colorsList_->addLayout(rowLayout);
     }
-
 }
 
 ColorSettingsWindow::~ColorSettingsWindow()
@@ -46,4 +46,11 @@ void ColorSettingsWindow::onColorClicked()
     p.fill(currentColor);
     btn->setIcon(p);
     return;
+}
+
+void ColorSettingsWindow::on_defOpenFilePathBtn_clicked()
+{
+    QString path = QFileDialog::getExistingDirectory(0, "Выбор стандартной папки для открытия файлов", jc_->getSettings()->getOpenFileDefPath());
+    ui->defOpenFilePathLine->setText(path);
+    jc_->getSettings()->setOpenFileDefPath(ui->defOpenFilePathLine->text());
 }

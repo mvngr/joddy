@@ -34,6 +34,7 @@ bool Settings::readSettingsFromFile(){
     }
 
     json_settings_ = json_obj.toVariantMap();
+    color_settings_ = json_settings_["type_colors"].toMap();
     settings_loaded_ = true;
     return true;
 }
@@ -42,8 +43,7 @@ QColor Settings::getColor(int type){
         throw "The settings file is not found";
         return QColor(255,0,0);
     }
-
-    QVariantMap rgb = json_settings_[getTypeAsString((int)type)].toMap();
+    QVariantMap rgb = color_settings_[getTypeAsString((int)type)].toMap();
     return QColor(rgb["r"].toInt(), rgb["g"].toInt(), rgb["b"].toInt());
 }
 QString Settings::getTypeAsString(int type){
@@ -119,7 +119,7 @@ bool Settings::setColor(int index, QColor color){
     m["r"] = color.red();
     m["g"] = color.green();
     m["b"] = color.blue();
-    json_settings_[getTypeAsString(index)].setValue(m);
+    color_settings_[getTypeAsString(index)].setValue(m);
     saveSettings();
     return true;
 }
@@ -132,9 +132,20 @@ bool Settings::saveSettings(){
     if(json_settings_.isEmpty())
         return false;
     QJsonObject obj;
+    json_settings_["type_colors"].setValue(color_settings_);
     QJsonDocument * d = new QJsonDocument( obj.fromVariantMap(json_settings_) );
 
     file_obj.write(d->toJson());
     file_obj.close();
     return true;
+}
+void Settings::setOpenFileDefPath(QString path){
+    if(path.size() != 0){
+        json_settings_["def_path"].setValue(path);
+        saveSettings();
+    }
+    return;
+}
+QString Settings::getOpenFileDefPath(){
+    return json_settings_["def_path"].toString();
 }

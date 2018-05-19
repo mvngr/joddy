@@ -24,7 +24,7 @@ bool OsmParser::readFile(){
                    "industrial" << "retail" << "warehouse" << "kiosk" << "cabin" << "religious" << "cathedral" << "chapel" << "church" << "mosque" << "temple" << "synagogue" << "shrine" << "bakehouse" <<
                    "kindergarten" << "civic" << "hospital" << "school" << "stadium" << "train_station" << "transportation" << "university" << "grandstand" << "public" << "barn" <<
                    "bridge" << "bunker" << "carport" << "conservatory" << "construction" << "cowshed" << "digester" << "farm_auxiliary" << "garage" << "garages" << "garbage_shed" << "greenhouse" <<
-                   "hangar" << "hut" << "pavilion" << "parking" << "riding_hall" << "roof" << "shed" << "stable" << "sty" << "transformer_tower" << "service" << "ruins" << "water_tower";
+                   "hangar" << "hut" << "pavilion" << "parking" << "riding_hall" << "roof" << "shed" << "stable" << "sty" << "transformer_tower" << "service" << "ruins" << "water_tower" << "collapsed";
 
     QList<QString> materials_to_numbers_ = * new QList<QString> << "wood" << "metal" << "brass" << "bronze" << "steel" << "concrete" << "reinforced_concrete"
                                                                           << "stone" << "granite" << "sandstone" << "masonry" << "brick" << "plastic" << "soil" << "glass";

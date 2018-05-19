@@ -145,7 +145,10 @@ void JoddyGraphicView::zoomOut(){
     return;
 }
 QColor JoddyGraphicView::typeToStrokeColor(Building::Types type){
-    return s_->getColor((int)type);
+    QColor c = s_->getColor((int)type);
+    if(c.red() == 0 && c.green() == 0 && c.blue() == 0)
+        return s_->getColor(0);
+    return c;
 }
 QColor JoddyGraphicView::typeToFillColor(Building::Types type){
     QColor temp = typeToStrokeColor(type);

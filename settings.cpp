@@ -111,6 +111,7 @@ QString Settings::getTypeAsString(int type){
     case 60 : return "service"; break;
     case 61 : return "ruins"; break;
     case 62 : return "water_tower"; break;
+    case 63 : return "collapsed"; break;
     default: return "ERROR"; break;
     }
 }

@@ -24,7 +24,7 @@ class Settings
 public:
     Settings();
 
-    const int typesCount = 43;
+    const int typesCount = 64;
 
     bool readSettingsFromFile();
 

@@ -37,6 +37,8 @@ private slots:
     void on_openMap3_triggered();
 
 private:
+    QToolButton * zoomInBtn_;
+    QToolButton * zoomOutBtn_;
     double zoom_;
     void on_openMap_triggered(QString path);
     Ui::MainWindow *ui;

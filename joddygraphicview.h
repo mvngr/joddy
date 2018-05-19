@@ -25,12 +25,17 @@ class JoddyGraphicView : public QGraphicsView
 public:
     explicit JoddyGraphicView(Settings *settings, QWidget *parent = 0);
     ~JoddyGraphicView();
+
+    const double ZOOM_MAX = 2.5;
+    const double ZOOM_MIN = 0.3;
+
     void setPoints(QList<QPointF> *list);
     void setBuildings(QList<Building *> *list);
     void setWays(QList<Way *> *list);
     void printDots();
     void zoomIn();
     void zoomOut();
+    double getZoom();
 
 signals:
 

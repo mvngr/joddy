@@ -17,29 +17,29 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->statusBar->addWidget(progress_);
     ui->graphicLayout->addWidget(map_);
 
-    QToolButton * zoomIn = new QToolButton(this);
-    QToolButton * zoomOut = new QToolButton(this);
+    zoomInBtn_ = new QToolButton(this);
+    zoomOutBtn_ = new QToolButton(this);
 
     QToolButton * openMap1 = new QToolButton(this);
     QToolButton * openMap2 = new QToolButton(this);
     QToolButton * openMap3 = new QToolButton(this);
 
-    zoomIn->setIcon(QIcon("source/zoom-in-button.svg"));
-    zoomOut->setIcon(QIcon("source/zoom-out-button.svg"));
+    zoomInBtn_->setIcon(QIcon("source/zoom-in-button.svg"));
+    zoomOutBtn_->setIcon(QIcon("source/zoom-out-button.svg"));
 
     openMap1->setIcon(QIcon("source/logo-pic.svg"));
     openMap2->setIcon(QIcon("source/logo-pic.svg"));
     openMap3->setIcon(QIcon("source/logo-pic.svg"));
 
-    ui->toolBar->addWidget(zoomIn);
-    ui->toolBar->addWidget(zoomOut);
+    ui->toolBar->addWidget(zoomInBtn_);
+    ui->toolBar->addWidget(zoomOutBtn_);
 
     ui->toolBar->addWidget(openMap1);
     ui->toolBar->addWidget(openMap2);
     ui->toolBar->addWidget(openMap3);
 
-    connect(zoomIn, SIGNAL(clicked(bool)), this, SLOT(zoom_in_triggered()));
-    connect(zoomOut, SIGNAL(clicked(bool)), this, SLOT(zoom_out_triggered()));
+    connect(zoomInBtn_, SIGNAL(clicked(bool)), this, SLOT(zoom_in_triggered()));
+    connect(zoomOutBtn_, SIGNAL(clicked(bool)), this, SLOT(zoom_out_triggered()));
 
     connect(openMap1, SIGNAL(clicked(bool)), this, SLOT(on_openMap1_triggered()));
     connect(openMap2, SIGNAL(clicked(bool)), this, SLOT(on_openMap2_triggered()));
@@ -77,11 +77,21 @@ void MainWindow::on_openSettings_triggered(){
     v->show();
 }
 void MainWindow::zoom_in_triggered(){
+    zoomOutBtn_->setEnabled(true);
     map_->zoomIn();
+    if(map_->getZoom() >= map_->ZOOM_MAX)
+        zoomInBtn_->setEnabled(false);
+    else
+        zoomInBtn_->setEnabled(true);
     return;
 }
 void MainWindow::zoom_out_triggered(){
+    zoomInBtn_->setEnabled(true);
     map_->zoomOut();
+    if(map_->getZoom() <= map_->ZOOM_MIN)
+        zoomOutBtn_->setEnabled(false);
+    else
+        zoomOutBtn_->setEnabled(true);
     return;
 }
 void MainWindow::on_openMap1_triggered(){

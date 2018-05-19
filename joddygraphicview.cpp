@@ -135,15 +135,13 @@ void JoddyGraphicView::setWays(QList<Way *> *list){
     return;
 }
 void JoddyGraphicView::zoomIn(){
-    zoom_ = (zoom_ < 2.4) ? (zoom_ + ZOOM_DELTA) : zoom_;
-    temp = false;
-    slotAlarmTimer();
+    zoom_ = (zoom_ <= ZOOM_MAX) ? (zoom_ + ZOOM_DELTA) : zoom_;
+    gPoints_->setScale(zoom_);
     return;
 }
 void JoddyGraphicView::zoomOut(){
-    zoom_ = (zoom_ > 0.3) ? (zoom_ - ZOOM_DELTA) : zoom_;
-    temp = false;
-    slotAlarmTimer();
+    zoom_ = (zoom_ > ZOOM_MIN) ? (zoom_ - ZOOM_DELTA) : zoom_;
+    gPoints_->setScale(zoom_);
     return;
 }
 QColor JoddyGraphicView::typeToStrokeColor(Building::Types type){
@@ -154,4 +152,7 @@ QColor JoddyGraphicView::typeToFillColor(Building::Types type){
     return QColor(temp.red() + DELTA_STROKE_AND_FILL_COLOR < 255 ? temp.red() + DELTA_STROKE_AND_FILL_COLOR : temp.red(),
                   temp.green() + DELTA_STROKE_AND_FILL_COLOR < 255 ? temp.green() + DELTA_STROKE_AND_FILL_COLOR : temp.green(),
                   temp.blue() + DELTA_STROKE_AND_FILL_COLOR < 255 ? temp.blue() + DELTA_STROKE_AND_FILL_COLOR : temp.blue());
+}
+double JoddyGraphicView::getZoom(){
+    return zoom_;
 }

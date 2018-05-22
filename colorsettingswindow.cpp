@@ -41,10 +41,12 @@ void ColorSettingsWindow::onColorClicked()
 {
     QToolButton* btn = qobject_cast<QToolButton*>(sender()); //get sender button
     QColor currentColor = QColorDialog::getColor(jc_->getSettings()->getColor(btn->objectName().toInt()));
-    jc_->getSettings()->setColor(btn->objectName().toInt(), currentColor);
-    QPixmap p(COLOR_VIEW_SIZE, COLOR_VIEW_SIZE);
-    p.fill(currentColor);
-    btn->setIcon(p);
+    if(currentColor.isValid()){
+        jc_->getSettings()->setColor(btn->objectName().toInt(), currentColor);
+        QPixmap p(COLOR_VIEW_SIZE, COLOR_VIEW_SIZE);
+        p.fill(currentColor);
+        btn->setIcon(p);
+    }
     return;
 }
 

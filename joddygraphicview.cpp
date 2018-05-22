@@ -35,12 +35,12 @@ JoddyGraphicView::JoddyGraphicView(Settings *settings, QWidget *parent) : QGraph
     temp = false;
 
     mapUpdate_ = new QTimer();
-    connect(mapUpdate_, SIGNAL(timeout()), this, SLOT(slotAlarmTimer()));
+    connect(mapUpdate_, SIGNAL(timeout()), this, SLOT(drawNewFrame()));
     mapUpdate_->start(50);
 }
 JoddyGraphicView::~JoddyGraphicView(){}
 
-void JoddyGraphicView::slotAlarmTimer(){
+void JoddyGraphicView::drawNewFrame(){
     if(points_->size() != 0)
         this->deleteItemsFromGroup(placeholder_);
 
@@ -94,7 +94,7 @@ void JoddyGraphicView::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     temp = false;
     dx_ = point.x();
     dy_ = point.y();
-    slotAlarmTimer();
+    drawNewFrame();
 }
 
 void JoddyGraphicView::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -113,7 +113,7 @@ void JoddyGraphicView::dragEnterEvent(QDragEnterEvent *event){
     temp = false;
     dx_ = point.x();
     dy_ = point.y();
-    slotAlarmTimer();
+    drawNewFrame();
     return;
 }
 void JoddyGraphicView::deleteItemsFromGroup(QGraphicsItemGroup *group){

@@ -40,7 +40,7 @@ public:
 signals:
 
 private slots:
-    void slotAlarmTimer();
+    void drawNewFrame();
 
 private:
     double zoom_;
@@ -60,7 +60,7 @@ private:
     bool temp;
     double dx_,dy_;
     void resizeEvent(QResizeEvent *event);
-    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dragEnterEvent(QDragEnterEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);

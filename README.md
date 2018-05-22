@@ -1,13 +1,16 @@
 # Joddy
 
-Программа для отображения `.osm` формата
+Программа для отображения `.osm` формата. Есть возможность кастомизировать вид карты внутри программы
 
 На данный момент приложение находится в стадии разработки. Степень ее готовности можно увидеть на скриншоте ниже
 
-![Скриншот #4](https://i.imgur.com/zzu2TON.png)
+![Скриншот #6](https://i.imgur.com/9RO7W8O.png)
+![Скриншот #7](https://i.imgur.com/vXKIKuf.png)
+![Скриншот #8](https://i.imgur.com/tqCvQFd.png)
 
 Скриншоты предыдущих версий:
 
+[![Скриншот #5](https://i.imgur.com/zzu2TONm.png)](https://i.imgur.com/zzu2TONm.png)
 [![Скриншот #4](https://i.imgur.com/oUQDtOQm.png)](https://i.imgur.com/oUQDtOQ.png)
 [![Скриншот #3](https://imgur.com/ZiUPhWEm.png)](https://imgur.com/ZiUPhWE.png)
 [![Скриншот #2](https://i.imgur.com/m8GHWk3m.png)](https://i.imgur.com/m8GHWk3.png)

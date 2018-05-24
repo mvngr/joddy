@@ -18,6 +18,8 @@ bool OsmParser::readFile(){
 
     QList<QString> temp_str_points_id = * new QList<QString>;
 
+    //adult_gaming_centre, amusement_arcade, beach_resort, 	bandstand, bird_hide, common, dance, disc_golf_course, dog_park, escape_game, firepit,
+
     //public => public_building
     QList<QString> types_to_numbers = * new QList<QString>
                 << "yes" << "apartments" << "farm" << "hotel" << "house" << "detached" << "residential" << "dormitory" << "terrace" << "houseboat" << "bungalow" << "static_caravan" << "commercial" <<
@@ -26,8 +28,8 @@ bool OsmParser::readFile(){
                    "bridge" << "bunker" << "carport" << "conservatory" << "construction" << "cowshed" << "digester" << "farm_auxiliary" << "garage" << "garages" << "garbage_shed" << "greenhouse" <<
                    "hangar" << "hut" << "pavilion" << "parking" << "riding_hall" << "roof" << "shed" << "stable" << "sty" << "transformer_tower" << "service" << "ruins" << "water_tower" << "collapsed";
 
-    QList<QString> materials_to_numbers_ = * new QList<QString> << "wood" << "metal" << "brass" << "bronze" << "steel" << "concrete" << "reinforced_concrete"
-                                                                          << "stone" << "granite" << "sandstone" << "masonry" << "brick" << "plastic" << "soil" << "glass";
+    /*QList<QString> materials_to_numbers_ = * new QList<QString> << "wood" << "metal" << "brass" << "bronze" << "steel" << "concrete" << "reinforced_concrete"
+                                                                          << "stone" << "granite" << "sandstone" << "masonry" << "brick" << "plastic" << "soil" << "glass";*/
 
     while (!xml.atEnd() && !xml.hasError())
     {
@@ -67,6 +69,15 @@ bool OsmParser::readFile(){
                 jc_->setWay(new Way(temp_points));
                 temp_str_points_id.clear();
             }
+
+            if(xml.name() == "tag" && xml.attributes().hasAttribute("k") && ( xml.attributes().value("k") == "landuse" || xml.attributes().value("k") == "leisure" )){
+                QList<QPointF> temp_points = * new QList<QPointF>;
+                foreach (QString id, temp_str_points_id)
+                    temp_points.push_back(jc_->getNodeStorage()->getPoint(id));
+                jc_->setNature(new Nature(temp_points));
+                temp_str_points_id.clear();
+            }
+
             //qDebug() << xml.name();
         }
     }

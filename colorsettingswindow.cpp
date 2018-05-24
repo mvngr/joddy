@@ -15,7 +15,7 @@ ColorSettingsWindow::ColorSettingsWindow(JoddyController *controller, QWidget *p
     for(int i = 0; i < jc_->getSettings()->typesCount; i++){
         QHBoxLayout *rowLayout = new QHBoxLayout(this);
         QPixmap pm(COLOR_VIEW_SIZE, COLOR_VIEW_SIZE);
-        pm.fill(jc_->getSettings()->getColor(i));
+        pm.fill(jc_->getSettings()->getBuindingsTypeColor(i));
         QToolButton *btn = new QToolButton(this);
         btn->setObjectName(QString::number(i));
         btn->setIcon(pm);
@@ -40,9 +40,9 @@ ColorSettingsWindow::~ColorSettingsWindow()
 void ColorSettingsWindow::onColorClicked()
 {
     QToolButton* btn = qobject_cast<QToolButton*>(sender()); //get sender button
-    QColor currentColor = QColorDialog::getColor(jc_->getSettings()->getColor(btn->objectName().toInt()));
+    QColor currentColor = QColorDialog::getColor(jc_->getSettings()->getBuindingsTypeColor(btn->objectName().toInt()));
     if(currentColor.isValid()){
-        jc_->getSettings()->setColor(btn->objectName().toInt(), currentColor);
+        jc_->getSettings()->setBuildingsTypeColor(btn->objectName().toInt(), currentColor);
         QPixmap p(COLOR_VIEW_SIZE, COLOR_VIEW_SIZE);
         p.fill(currentColor);
         btn->setIcon(p);

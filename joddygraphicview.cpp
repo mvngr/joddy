@@ -21,7 +21,7 @@ JoddyGraphicView::JoddyGraphicView(Settings *settings, QWidget *parent) : QGraph
 
 
     //init view items
-    s_ = settings;
+    settings_ = settings;
     gPoints_ = new QGraphicsItemGroup();
     placeholder_ = new QGraphicsItemGroup();
 
@@ -57,17 +57,22 @@ void JoddyGraphicView::drawNewFrame(){
 
     if(!temp && points_->size() != 0){
         this->deleteItemsFromGroup(gPoints_);
+
+        QColor fillNature = QColor(188,230,177);
+        QColor strokeNature = QColor(168, 210, 157);
+        for(int i = 0; i < nature_->length(); i++){
+            gPoints_->addToGroup(scene->addPolygon(nature_->at(i)->getPolygon(), strokeNature, fillNature));
+        }
+
         for(int i = 0; i < buildings_->length(); i++){
             Building::Types type = buildings_->at(i)->getType();
             gPoints_->addToGroup(scene->addPolygon(buildings_->at(i)->getPolygon(), typeToStrokeColor(type), typeToFillColor(type)));
         }
+
         for(int i = 0; i < ways_->length(); i++){
             for(int j = 0; j < ways_->at(i)->getPathLine()->size(); j++)
                 gPoints_->addToGroup(scene->addLine(ways_->at(i)->getPathLine()->at(j), penWay));
         }
-        //gPoints_->setScale(zoom_);
-        gPoints_->setTransform(QTransform(zoom_, 0, 0, zoom_, dx_, dy_));
-        //gPoints_->transform().translate(dx_,dy_);
 
         temp = true;
     }
@@ -134,6 +139,10 @@ void JoddyGraphicView::setWays(QList<Way *> *list){
     ways_ = list;
     return;
 }
+void JoddyGraphicView::setNature(QList<Nature *> *list){
+    nature_ = list;
+    return;
+}
 void JoddyGraphicView::zoomIn(){
     zoom_ = (zoom_ <= ZOOM_MAX) ? (zoom_ + ZOOM_DELTA) : zoom_;
     gPoints_->setScale(zoom_);
@@ -145,9 +154,9 @@ void JoddyGraphicView::zoomOut(){
     return;
 }
 QColor JoddyGraphicView::typeToStrokeColor(Building::Types type){
-    QColor c = s_->getColor((int)type);
+    QColor c = settings_->getBuindingsTypeColor((int)type);
     if(c.red() == 0 && c.green() == 0 && c.blue() == 0)
-        return s_->getColor(0);
+        return settings_->getBuindingsTypeColor(0);
     return c;
 }
 QColor JoddyGraphicView::typeToFillColor(Building::Types type){

@@ -38,7 +38,7 @@ bool Settings::readSettingsFromFile(){
     settings_loaded_ = true;
     return true;
 }
-QColor Settings::getColor(int type){
+QColor Settings::getBuindingsTypeColor(int type){
     if(!settings_loaded_){
         throw "The settings file is not found";
         return QColor(255,0,0);
@@ -115,7 +115,7 @@ QString Settings::getTypeAsString(int type){
     default: return "ERROR"; break;
     }
 }
-bool Settings::setColor(int index, QColor color){
+bool Settings::setBuildingsTypeColor(int index, QColor color){
     QVariantMap m;
     m["r"] = color.red();
     m["g"] = color.green();

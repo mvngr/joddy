@@ -28,8 +28,8 @@ public:
 
     bool readSettingsFromFile();
 
-    QColor getColor(int type);
-    bool setColor(int index, QColor color);
+    QColor getBuindingsTypeColor(int type);
+    bool setBuildingsTypeColor(int index, QColor color);
     QString getTypeAsString(int type);
     void setOpenFileDefPath(QString path);
     QString getOpenFileDefPath();

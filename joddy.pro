@@ -35,7 +35,8 @@ SOURCES += \
     building.cpp \
     way.cpp \
     settings.cpp \
-    colorsettingswindow.cpp
+    colorsettingswindow.cpp \
+    nature.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -47,7 +48,8 @@ HEADERS += \
     building.h \
     way.h \
     settings.h \
-    colorsettingswindow.h
+    colorsettingswindow.h \
+    nature.h
 
 FORMS += \
         mainwindow.ui \

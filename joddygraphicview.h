@@ -7,12 +7,14 @@
 #include <QGraphicsItemGroup>
 #include <QTimer>
 #include <QDebug>
-#include <building.h>
-#include <way.h>
 #include <QtSvg/QGraphicsSvgItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneMoveEvent>
+
+#include <building.h>
+#include <way.h>
 #include <settings.h>
+#include <nature.h>
 
 #define DELTA_STROKE_AND_FILL_COLOR 40
 
@@ -32,6 +34,8 @@ public:
     void setPoints(QList<QPointF> *list);
     void setBuildings(QList<Building *> *list);
     void setWays(QList<Way *> *list);
+    void setNature(QList<Nature *> *list);
+
     void printDots();
     void zoomIn();
     void zoomOut();
@@ -52,11 +56,12 @@ private:
 
     QGraphicsSvgItem *svgPlaceholder_;
 
-    Settings * s_;
+    Settings * settings_;
     QTimer *mapUpdate_;
     QList<QPointF> *points_;
     QList<Building *> *buildings_;
     QList<Way *> *ways_;
+    QList<Nature *> *nature_;
     bool temp;
     double dx_,dy_;
     void resizeEvent(QResizeEvent *event);

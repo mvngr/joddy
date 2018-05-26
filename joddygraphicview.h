@@ -72,7 +72,10 @@ private:
     void deleteItemsFromGroup(QGraphicsItemGroup *group_1);
 
     QColor typeToStrokeColor(Building::Types type);
-    QColor typeToFillColor(Building::Types type);
+    QColor landuseToStrokeColor(Nature::Landuse landuse);
+
+    QColor strokeToFillColor(QColor strokeColor);
+    QColor makeLighter(QColor color);
 };
 
 #endif // JODDYGRAPHICVIEW_H

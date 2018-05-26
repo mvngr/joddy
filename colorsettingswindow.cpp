@@ -9,13 +9,15 @@ ColorSettingsWindow::ColorSettingsWindow(JoddyController *controller, QWidget *p
 
     jc_ = controller;
 
-    colorsList_ = ui->list;
+    buildingColorsList_ = ui->list;
+    landuseColorsList_ = ui->landuse_list;
     ui->defOpenFilePathLine->setText(jc_->getSettings()->getOpenFileDefPath());
 
+    //TODO MOVE IN FUNCTION!!
     for(int i = 0; i < jc_->getSettings()->typesCount; i++){
         QHBoxLayout *rowLayout = new QHBoxLayout(this);
         QPixmap pm(COLOR_VIEW_SIZE, COLOR_VIEW_SIZE);
-        pm.fill(jc_->getSettings()->getBuindingsTypeColor(i));
+        pm.fill(jc_->getSettings()->getBuindingTypeColor(i));
         QToolButton *btn = new QToolButton(this);
         btn->setObjectName(QString::number(i));
         btn->setIcon(pm);
@@ -23,13 +25,33 @@ ColorSettingsWindow::ColorSettingsWindow(JoddyController *controller, QWidget *p
         connect(btn, SIGNAL(clicked()), this, SLOT(onColorClicked()));
 
         QLabel *name = new QLabel(this);
-        name->setText(jc_->getSettings()->getTypeAsString(i));
+        name->setText(jc_->getSettings()->getBuildingTypeAsString(i));
 
         rowLayout->addWidget(btn);
         rowLayout->addWidget(name);
 
-        colorsList_->addLayout(rowLayout);
+        buildingColorsList_->addLayout(rowLayout);
     }
+
+    for(int i = 0; i < jc_->getSettings()->landuseCount; i++){
+        QHBoxLayout *rowLayout = new QHBoxLayout(this);
+        QPixmap pm(COLOR_VIEW_SIZE, COLOR_VIEW_SIZE);
+        pm.fill(jc_->getSettings()->getLanduseColor(i));
+        QToolButton *btn = new QToolButton(this);
+        btn->setObjectName(QString::number(i));
+        btn->setIcon(pm);
+        btn->setFixedSize(COLOR_BUTTON_SIZE, COLOR_BUTTON_SIZE);
+        connect(btn, SIGNAL(clicked()), this, SLOT(onLanduseClicked()));
+
+        QLabel *name = new QLabel(this);
+        name->setText(jc_->getSettings()->getLanduseAsString(i));
+
+        rowLayout->addWidget(btn);
+        rowLayout->addWidget(name);
+
+        landuseColorsList_->addLayout(rowLayout);
+    }
+
 }
 
 ColorSettingsWindow::~ColorSettingsWindow()
@@ -40,9 +62,20 @@ ColorSettingsWindow::~ColorSettingsWindow()
 void ColorSettingsWindow::onColorClicked()
 {
     QToolButton* btn = qobject_cast<QToolButton*>(sender()); //get sender button
-    QColor currentColor = QColorDialog::getColor(jc_->getSettings()->getBuindingsTypeColor(btn->objectName().toInt()));
+    QColor currentColor = QColorDialog::getColor(jc_->getSettings()->getBuindingTypeColor(btn->objectName().toInt()));
     if(currentColor.isValid()){
-        jc_->getSettings()->setBuildingsTypeColor(btn->objectName().toInt(), currentColor);
+        jc_->getSettings()->setBuildingTypeColor(btn->objectName().toInt(), currentColor);
+        QPixmap p(COLOR_VIEW_SIZE, COLOR_VIEW_SIZE);
+        p.fill(currentColor);
+        btn->setIcon(p);
+    }
+    return;
+}
+void ColorSettingsWindow::onLanduseClicked(){
+    QToolButton* btn = qobject_cast<QToolButton*>(sender()); //get sender button
+    QColor currentColor = QColorDialog::getColor(jc_->getSettings()->getLanduseColor(btn->objectName().toInt()));
+    if(currentColor.isValid()){
+        jc_->getSettings()->setLanduseColor(btn->objectName().toInt(), currentColor);
         QPixmap p(COLOR_VIEW_SIZE, COLOR_VIEW_SIZE);
         p.fill(currentColor);
         btn->setIcon(p);

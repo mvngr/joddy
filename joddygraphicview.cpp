@@ -49,24 +49,20 @@ void JoddyGraphicView::drawNewFrame(){
 
     scene->setSceneRect(0,0,width,height);
 
-    QPen penBlack(Qt::black);
-    QPen penBuild(Qt::black);
     QPen penWay(Qt::darkGray);
-
-
 
     if(!temp && points_->size() != 0){
         this->deleteItemsFromGroup(gPoints_);
 
-        QColor fillNature = QColor(188,230,177);
-        QColor strokeNature = QColor(168, 210, 157);
         for(int i = 0; i < nature_->length(); i++){
-            gPoints_->addToGroup(scene->addPolygon(nature_->at(i)->getPolygon(), strokeNature, fillNature));
+            QColor color = makeLighter(landuseToStrokeColor(nature_->at(i)->getLanduse()));
+            gPoints_->addToGroup(scene->addPolygon(nature_->at(i)->getPolygon(), color, color));
         }
 
         for(int i = 0; i < buildings_->length(); i++){
             Building::Types type = buildings_->at(i)->getType();
-            gPoints_->addToGroup(scene->addPolygon(buildings_->at(i)->getPolygon(), typeToStrokeColor(type), typeToFillColor(type)));
+            QColor color = typeToStrokeColor(type);
+            gPoints_->addToGroup(scene->addPolygon(buildings_->at(i)->getPolygon(), color, strokeToFillColor(color)));
         }
 
         for(int i = 0; i < ways_->length(); i++){
@@ -154,17 +150,28 @@ void JoddyGraphicView::zoomOut(){
     return;
 }
 QColor JoddyGraphicView::typeToStrokeColor(Building::Types type){
-    QColor c = settings_->getBuindingsTypeColor((int)type);
+    QColor c = settings_->getBuindingTypeColor((int)type);
     if(c.red() == 0 && c.green() == 0 && c.blue() == 0)
-        return settings_->getBuindingsTypeColor(0);
+        return settings_->getBuindingTypeColor(0);
     return c;
 }
-QColor JoddyGraphicView::typeToFillColor(Building::Types type){
-    QColor temp = typeToStrokeColor(type);
-    return QColor(temp.red() + DELTA_STROKE_AND_FILL_COLOR < 255 ? temp.red() + DELTA_STROKE_AND_FILL_COLOR : temp.red(),
-                  temp.green() + DELTA_STROKE_AND_FILL_COLOR < 255 ? temp.green() + DELTA_STROKE_AND_FILL_COLOR : temp.green(),
-                  temp.blue() + DELTA_STROKE_AND_FILL_COLOR < 255 ? temp.blue() + DELTA_STROKE_AND_FILL_COLOR : temp.blue());
+QColor JoddyGraphicView::landuseToStrokeColor(Nature::Landuse landuse){
+    QColor c = settings_->getLanduseColor((int)landuse);
+    if(c.red() == 0 && c.green() == 0 && c.blue() == 0)
+        return settings_->getLanduseColor(0);
+    return c;
+}
+QColor JoddyGraphicView::strokeToFillColor(QColor strokeColor){
+    return QColor(strokeColor.red() + DELTA_STROKE_AND_FILL_COLOR < 255 ? strokeColor.red() + DELTA_STROKE_AND_FILL_COLOR : strokeColor.red(),
+                  strokeColor.green() + DELTA_STROKE_AND_FILL_COLOR < 255 ? strokeColor.green() + DELTA_STROKE_AND_FILL_COLOR : strokeColor.green(),
+                  strokeColor.blue() + DELTA_STROKE_AND_FILL_COLOR < 255 ? strokeColor.blue() + DELTA_STROKE_AND_FILL_COLOR : strokeColor.blue());
 }
 double JoddyGraphicView::getZoom(){
     return zoom_;
+}
+QColor JoddyGraphicView::makeLighter(QColor color){
+    color.setRed(color.red() + 10 > 255 ? 255 : color.red() + 10);
+    color.setGreen(color.green() + 10 > 255 ? 255 : color.green() + 10);
+    color.setBlue(color.blue() + 10 > 255 ? 255 : color.blue() + 10);
+    return color;
 }

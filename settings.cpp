@@ -2,51 +2,60 @@
 
 Settings::Settings()
 {
-    settings_loaded_ = false;
+    settingsLoaded_ = false;
     readSettingsFromFile();
 }
 bool Settings::readSettingsFromFile(){
-    QFile file_obj((QString)DEFAULT_NAME_OF_SETTINGS + (QString)".json");
-    if (!file_obj.open(QIODevice::ReadOnly)) {
+    QFile fileObj((QString)DEFAULT_NAME_OF_SETTINGS + (QString)".json");
+    if (!fileObj.open(QIODevice::ReadOnly)) {
         qDebug() << "Failed to open " << DEFAULT_NAME_OF_SETTINGS << ".json";
         return false;
     }
 
-    QTextStream file_text(&file_obj);
-    QString json_string = file_text.readAll();
-    file_obj.close();
-    QByteArray json_bytes = json_string.toLocal8Bit();
+    QTextStream fileText(&fileObj);
+    QString jsonString = fileText.readAll();
+    fileObj.close();
+    QByteArray jsonBytes = jsonString.toLocal8Bit();
 
-    QJsonDocument json_doc = QJsonDocument::fromJson(json_bytes);
-    if (json_doc.isNull()){
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonBytes);
+    if (jsonDoc.isNull()){
         qDebug() << "Failed to create JSON doc.";
         return false;
     }
-    if (!json_doc.isObject()){
+    if (!jsonDoc.isObject()){
         qDebug() << "JSON is not an object.";
         return false;
     }
 
-    QJsonObject json_obj = json_doc.object();
-    if(json_obj.isEmpty()){
+    QJsonObject jsonObj = jsonDoc.object();
+    if(jsonObj.isEmpty()){
         qDebug()<<"JSON object is empty.";
         return false;
     }
 
-    json_settings_ = json_obj.toVariantMap();
-    color_settings_ = json_settings_["type_colors"].toMap();
-    settings_loaded_ = true;
+    jsonSettings_ = jsonObj.toVariantMap();
+    buildingColorSettings_ = jsonSettings_["type_colors"].toMap();
+    landuseColorSettings_ = jsonSettings_["landuse_colors"].toMap();
+    settingsLoaded_ = true;
     return true;
 }
-QColor Settings::getBuindingsTypeColor(int type){
-    if(!settings_loaded_){
+QColor Settings::getBuindingTypeColor(int type){
+    if(!settingsLoaded_){
         throw "The settings file is not found";
         return QColor(255,0,0);
     }
-    QVariantMap rgb = color_settings_[getTypeAsString((int)type)].toMap();
+    QVariantMap rgb = buildingColorSettings_[getBuildingTypeAsString((int)type)].toMap();
     return QColor(rgb["r"].toInt(), rgb["g"].toInt(), rgb["b"].toInt());
 }
-QString Settings::getTypeAsString(int type){
+QColor Settings::getLanduseColor(int index){
+    if(!settingsLoaded_){
+        throw "The settings file is not found";
+        return QColor(255,0,0);
+    }
+    QVariantMap rgb = landuseColorSettings_[getLanduseAsString((int)index)].toMap();
+    return QColor(rgb["r"].toInt(), rgb["g"].toInt(), rgb["b"].toInt());
+}
+QString Settings::getBuildingTypeAsString(int type){
     switch (type) {
     case 0 : return "yes"; break;
     case 1 : return "apartments"; break;
@@ -115,12 +124,60 @@ QString Settings::getTypeAsString(int type){
     default: return "ERROR"; break;
     }
 }
-bool Settings::setBuildingsTypeColor(int index, QColor color){
+QString Settings::getLanduseAsString(int index){
+    switch (index) {
+    case 0 : return "allotments"; break;
+    case 1 : return "basin"; break;
+    case 2 : return "brownfield"; break;
+    case 3 : return "cemetery"; break;
+    case 4 : return "commercial"; break;
+    case 5 : return "conservation"; break;
+    case 6 : return "construction"; break;
+    case 7 : return "depot"; break;
+    case 8 : return "farmland"; break;
+    case 9 : return "farmyard"; break;
+    case 10 : return "forest"; break;
+    case 11 : return "garages"; break;
+    case 12 : return "grass"; break;
+    case 13 : return "greenfield"; break;
+    case 14 : return "greenhouse_horticulture"; break;
+    case 15 : return "industrial"; break;
+    case 16 : return "landfill"; break;
+    case 17 : return "meadow"; break;
+    case 18 : return "military"; break;
+    case 19 : return "orchard"; break;
+    case 20 : return "pasture"; break;
+    case 21 : return "peat_cutting"; break;
+    case 22 : return "plant_nursery"; break;
+    case 23 : return "port"; break;
+    case 24 : return "quarry"; break;
+    case 25 : return "railway"; break;
+    case 26 : return "recreation_ground"; break;
+    case 27 : return "religious"; break;
+    case 28 : return "reservoir"; break;
+    case 29 : return "residential"; break;
+    case 30 : return "retail"; break;
+    case 31 : return "salt_pond"; break;
+    case 32 : return "village_green"; break;
+    case 33 : return "vineyard"; break;
+    default: return "ERROR"; break;
+    }
+}
+bool Settings::setBuildingTypeColor(int index, QColor color){
     QVariantMap m;
     m["r"] = color.red();
     m["g"] = color.green();
     m["b"] = color.blue();
-    color_settings_[getTypeAsString(index)].setValue(m);
+    buildingColorSettings_[getBuildingTypeAsString(index)].setValue(m);
+    saveSettings();
+    return true;
+}
+bool Settings::setLanduseColor(int index, QColor color){
+    QVariantMap m;
+    m["r"] = color.red();
+    m["g"] = color.green();
+    m["b"] = color.blue();
+    landuseColorSettings_[getLanduseAsString(index)].setValue(m);
     saveSettings();
     return true;
 }
@@ -130,11 +187,14 @@ bool Settings::saveSettings(){
         qDebug() << "Failed to open " << DEFAULT_NAME_OF_SETTINGS << ".json";
         return false;
     }
-    if(json_settings_.isEmpty())
+    if(jsonSettings_.isEmpty())
         return false;
     QJsonObject obj;
-    json_settings_["type_colors"].setValue(color_settings_);
-    QJsonDocument * d = new QJsonDocument( obj.fromVariantMap(json_settings_) );
+
+    jsonSettings_["type_colors"].setValue(buildingColorSettings_);
+    jsonSettings_["landuse_colors"].setValue(landuseColorSettings_);
+
+    QJsonDocument * d = new QJsonDocument( obj.fromVariantMap(jsonSettings_) );
 
     file_obj.write(d->toJson());
     file_obj.close();
@@ -142,11 +202,11 @@ bool Settings::saveSettings(){
 }
 void Settings::setOpenFileDefPath(QString path){
     if(path.size() != 0){
-        json_settings_["def_path"].setValue(path);
+        jsonSettings_["def_path"].setValue(path);
         saveSettings();
     }
     return;
 }
 QString Settings::getOpenFileDefPath(){
-    return json_settings_["def_path"].toString();
+    return jsonSettings_["def_path"].toString();
 }

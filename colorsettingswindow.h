@@ -30,12 +30,14 @@ public:
 
 private:
 
-    QVBoxLayout * colorsList_;
+    QVBoxLayout * buildingColorsList_;
+    QVBoxLayout * landuseColorsList_;
     JoddyController * jc_;
 
     Ui::ColorSettingsWindow *ui;
 private slots:
     void onColorClicked();
+    void onLanduseClicked();
     void on_defOpenFilePathBtn_clicked();
 };
 

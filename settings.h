@@ -25,21 +25,28 @@ public:
     Settings();
 
     const int typesCount = 64;
+    const int landuseCount = 33;
 
     bool readSettingsFromFile();
 
-    QColor getBuindingsTypeColor(int type);
-    bool setBuildingsTypeColor(int index, QColor color);
-    QString getTypeAsString(int type);
-    void setOpenFileDefPath(QString path);
     QString getOpenFileDefPath();
+    void setOpenFileDefPath(QString path);
+
+    QColor getBuindingTypeColor(int type);
+    QString getBuildingTypeAsString(int type);
+    bool setBuildingTypeColor(int index, QColor color);
+
+    QColor getLanduseColor(int index);
+    QString getLanduseAsString(int index);
+    bool setLanduseColor(int index, QColor color);
 
 private:
     bool saveSettings();
-    QVariantMap json_settings_;
-    QVariantMap color_settings_;
+    QVariantMap jsonSettings_;
+    QVariantMap buildingColorSettings_;
+    QVariantMap landuseColorSettings_;
     QFile file_;
-    bool settings_loaded_;
+    bool settingsLoaded_;
     QString openFileDefinePath_;
 
 };

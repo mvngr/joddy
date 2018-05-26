@@ -28,6 +28,12 @@ bool OsmParser::readFile(){
                    "bridge" << "bunker" << "carport" << "conservatory" << "construction" << "cowshed" << "digester" << "farm_auxiliary" << "garage" << "garages" << "garbage_shed" << "greenhouse" <<
                    "hangar" << "hut" << "pavilion" << "parking" << "riding_hall" << "roof" << "shed" << "stable" << "sty" << "transformer_tower" << "service" << "ruins" << "water_tower" << "collapsed";
 
+    QList<QString> landuse_to_numbers = * new QList<QString>
+           << "allotments" << "basin" << "brownfield" << "cemetery" << "commercial" << "conservation" << "construction" << "depot" << "farmland" << "farmyard"
+           << "forest" << "garages" << "grass" << "greenfield" << "greenhouse_horticulture" << "industrial" << "landfill" << "meadow" << "military" << "orchard"
+           << "pasture" << "peat_cutting" << "plant_nursery" << "port" << "quarry" << "railway" << "recreation_ground" << "religious" << "reservoir" << "residential"
+           << "retail" << "salt_pond" << "village_green" << "vineyard";
+
     /*QList<QString> materials_to_numbers_ = * new QList<QString> << "wood" << "metal" << "brass" << "bronze" << "steel" << "concrete" << "reinforced_concrete"
                                                                           << "stone" << "granite" << "sandstone" << "masonry" << "brick" << "plastic" << "soil" << "glass";*/
 
@@ -70,11 +76,12 @@ bool OsmParser::readFile(){
                 temp_str_points_id.clear();
             }
 
-            if(xml.name() == "tag" && xml.attributes().hasAttribute("k") && ( xml.attributes().value("k") == "landuse" || xml.attributes().value("k") == "leisure" )){
+            if(xml.name() == "tag" && xml.attributes().hasAttribute("k") && xml.attributes().value("k") == "landuse" && xml.attributes().hasAttribute("v")){
                 QList<QPointF> temp_points = * new QList<QPointF>;
                 foreach (QString id, temp_str_points_id)
                     temp_points.push_back(jc_->getNodeStorage()->getPoint(id));
-                jc_->setNature(new Nature(temp_points));
+                int type = landuse_to_numbers.indexOf(xml.attributes().value("v").toString());
+                jc_->setNature(new Nature(temp_points, Nature::Landuse(type)));
                 temp_str_points_id.clear();
             }
 

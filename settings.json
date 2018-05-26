@@ -1,5 +1,172 @@
 {
     "def_path": "C:/Users/Mike/Downloads",
+    "landuse_colors": {
+        "allotments": {
+            "b": 178,
+            "g": 207,
+            "r": 238
+        },
+        "basin": {
+            "b": 209,
+            "g": 208,
+            "r": 180
+        },
+        "brownfield": {
+            "b": 144,
+            "g": 182,
+            "r": 182
+        },
+        "cemetery": {
+            "b": 177,
+            "g": 204,
+            "r": 171
+        },
+        "commercial": {
+            "b": 207,
+            "g": 207,
+            "r": 238
+        },
+        "conservation": {
+            "b": 165,
+            "g": 237,
+            "r": 207
+        },
+        "construction": {
+            "b": 180,
+            "g": 199,
+            "r": 199
+        },
+        "depot": {
+            "b": 236,
+            "g": 236,
+            "r": 236
+        },
+        "farmland": {
+            "b": 203,
+            "g": 232,
+            "r": 249
+        },
+        "farmyard": {
+            "b": 164,
+            "g": 204,
+            "r": 234
+        },
+        "forest": {
+            "b": 138,
+            "g": 202,
+            "r": 157
+        },
+        "garages": {
+            "b": 204,
+            "g": 221,
+            "r": 222
+        },
+        "grass": {
+            "b": 165,
+            "g": 237,
+            "r": 207
+        },
+        "greenfield": {
+            "b": 232,
+            "g": 238,
+            "r": 241
+        },
+        "greenhouse_horticulture": {
+            "b": 203,
+            "g": 232,
+            "r": 249
+        },
+        "industrial": {
+            "b": 227,
+            "g": 209,
+            "r": 230
+        },
+        "landfill": {
+            "b": 144,
+            "g": 182,
+            "r": 182
+        },
+        "meadow": {
+            "b": 168,
+            "g": 236,
+            "r": 207
+        },
+        "military": {
+            "b": 222,
+            "g": 228,
+            "r": 243
+        },
+        "orchard": {
+            "b": 144,
+            "g": 220,
+            "r": 158
+        },
+        "pasture": {
+            "b": 168,
+            "g": 236,
+            "r": 207
+        },
+        "peat_cutting": {
+            "b": 161,
+            "g": 226,
+            "r": 199
+        },
+        "plant_nursery": {
+            "b": 169,
+            "g": 228,
+            "r": 181
+        },
+        "port": {
+            "b": 207,
+            "g": 207,
+            "r": 207
+        },
+        "quarry": {
+            "b": 181,
+            "g": 181,
+            "r": 183
+        },
+        "railway": {
+            "b": 227,
+            "g": 209,
+            "r": 230
+        },
+        "recreation_ground": {
+            "b": 165,
+            "g": 237,
+            "r": 207
+        },
+        "religious": {
+            "b": 202,
+            "g": 205,
+            "r": 206
+        },
+        "reservoir": {
+            "b": 224,
+            "g": 212,
+            "r": 171
+        },
+        "residential": {
+            "b": 218,
+            "g": 218,
+            "r": 218
+        },
+        "retail": {
+            "b": 197,
+            "g": 202,
+            "r": 254
+        },
+        "salt_pond": {
+            "b": 178,
+            "g": 242,
+            "r": 253
+        },
+        "village_green": {
+            "b": 165,
+            "g": 237,
+            "r": 207
+        }
+    },
     "type_colors": {
         "ERROR": null,
         "apartments": {

@@ -26,19 +26,27 @@ class ColorSettingsWindow : public QDialog
 
 public:
     explicit ColorSettingsWindow(JoddyController * controller, QWidget *parent = 0);
+
+    enum class ObjectName { Building, Landuse };
+    void showColorsList(ObjectName objectName);
+
     ~ColorSettingsWindow();
 
 private:
-
-    QVBoxLayout * buildingColorsList_;
-    QVBoxLayout * landuseColorsList_;
+    QVBoxLayout * colorsList_;
     JoddyController * jc_;
 
     Ui::ColorSettingsWindow *ui;
+
+    void showBuildingColorList();
+    void showLanduseColorList();
+
 private slots:
     void onColorClicked();
     void onLanduseClicked();
     void on_defOpenFilePathBtn_clicked();
+
+    void on_comboBox_activated(int index);
 };
 
 #endif // COLORSETTINGSWINDOW_H
